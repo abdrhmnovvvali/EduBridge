@@ -1,0 +1,233 @@
+class LocaleKeys {
+  const LocaleKeys._();
+
+  // Auth və profil
+  static const googleSigInCancelled = 'google_signin_cancelled';
+  static const otpVerification = 'otpVerification';
+  static const signUp = 'signUp';
+  static const profile = 'profile';
+  static const registerPass = 'registerPass';
+  static const agreement = 'agreement';
+  static const becomeAgree = 'becomeAgree';
+  static const personalInformation = 'personalInformation';
+  static const verifyWithCorporateEmail = 'verifyWithCorporateEmail';
+  static const logout = 'logout';
+  static const edit = 'edit';
+  static const firstname = 'firstname';
+  static const lastname = 'lastname';
+  static const goBack = 'goBack';
+  static const emailAddress = 'emailAddress';
+  static const corporateEmailAddress = 'corporateEmailAddress';
+  static const gender = 'gender';
+  static const dateOfBirth = 'dateOfBirth';
+  static const phoneNumber = 'phoneNumber';
+  static const fullName = 'fullName';
+  static const verifyCorporateEmailAddress = 'verifyCorporateEmailAddress';
+  static const verify = 'verify';
+  static const save = 'save';
+  static const verifyWithPhoneNumber = 'verifyWithPhoneNumber';
+  static const submit = 'submit';
+  static const delete = 'delete';
+  static const cancel = 'cancel';
+  static const deleteAccount = 'deleteAccount';
+
+  // Bonus və kuponlar
+  static const giftWheel = 'giftWheel';
+  static const coupons = 'coupons';
+  static const cashbackAmount = 'cashbackAmount';
+  static const cashbackRate = 'cashbackRate';
+  static const bonuses = 'bonuses';
+  static const activeCoupons = 'activeCoupons';
+  static const active = 'active';
+  static const used = 'used';
+  static const expired = 'expired';
+  static const validUntil = 'validUntil';
+  static const yourBonusCode = 'yourBonusCode';
+
+  // Naviqasiya və ümumi
+  static const location = 'location';
+  static const qr = 'qr';
+  static const notifications = 'notifications';
+  static const settings = 'settings';
+  static const termsAndConditions = 'termsAndConditions';
+  static const privacyPolicy = 'privacyPolicy';
+  static const help = 'help';
+  static const languageChoice = 'languageChoice';
+  static const branch = 'branch';
+  static const search = 'search';
+  static const seeMore = 'seeMore';
+  static const helpCenter = 'helpCenter';
+  static const changeLanguage = 'changeLanguage';
+  static const addChild = 'addChild';
+  static const close = 'close';
+  static const alarmClockInfo = 'alarmClockInfo';
+
+  // Dil seçimi
+  static const selectLanguage = 'selectLanguage';
+  static const english = 'english';
+  static const russian = 'russian';
+  static const azerbaijani = 'azerbaijani';
+
+  // ƏLAVƏ EDILƏN YENI KEY-LƏR
+
+  // Ümumi
+  static const select = 'select';
+  static const welcomeTo = 'welcomeTo';
+  static const login = 'login';
+  static const signup = 'signup';
+  static const dontHaveAnAccount = "don'tHaveAnAccount?";
+  static const writeYourPhoneNumberForSignIn = 'writeYourPhoneNumberForSignIn';
+  static const surname = 'surname';
+  static const continueKey = 'continue';
+  static const ourStores = 'ourStores';
+  static const information = 'information';
+  static const usageLimit = 'usageLimit';
+  static const spinAndWin = 'spinAndWin';
+  static const success = 'success';
+  static const noNotification = 'noNotification';
+  static const noData = 'noData';
+  static const unknownBranch = 'unknownBranch';
+  static const addressInformation = 'addressInformation';
+  static const unknownLocation = 'unknownLocation';
+  static const unknownPhone = 'unknownPhone';
+  static const unknownEmail = 'unknownEmail';
+  static const socialMedia = 'socialMedia';
+  static const nonExpirable = 'nonExpirable';
+  static const doYouHaveAnyQuestions = 'doYouHaveAnyQuestions';
+  static const youCanReachUsVia = 'youCanReachUsVia';
+  static const thisAppWillHelp = 'thisAppWillHelp';
+  static const start = 'start';
+  static const getYourGift = 'getYourGift';
+  static const noResult = 'noResult';
+  static const resendOtpAgainIn = 'resendOtpAgainIn';
+  static const didntGetOtp = "didn'tGetOtp";
+  static const resending = 'resending';
+  static const resend = 'resend';
+  static const percent = '%';
+  static const doYouWantToLogout = 'doYouWantToLogout';
+  static const doYouWantToDelete = 'doYouWantToDelete';
+  static const selectAPhoneCode = 'selectAPhoneCode';
+  static const congrats = 'congrats';
+  static const youAreRegistered = 'youAreRegistered';
+  static const goHomePage = 'goHomePage';
+  static const soon = 'soon';
+  static const noActiveCoupons = 'noActiveCoupons';
+  static const change = 'change';
+  static const findBestPrices = 'findBestPrices';
+  static const skip = 'skip';
+  static const next = 'next';
+  static const getNotifications = 'getNotifications';
+  static const compareProducts = 'compareProducts';
+  static const getStarted = 'getStarted';
+  static const languageSelection = 'languageSelection';
+
+  // Auth
+  static const byPhoneNumber = 'byPhoneNumber';
+  static const continueWithApple = 'continueWithApple';
+  static const continueWithGoogle = 'continueWithGoogle';
+  static const haveAnAccount = 'haveAnAccount';
+  static const signIn = 'signIn';
+  static const continueWithoutSigningUp = 'continueWithoutSigningUp';
+  static const nameSurname = 'nameSurname';
+  static const password = 'password';
+  static const confirmPassword = 'confirmPassword';
+  static const bySigningUp = 'bySigningUp';
+  static const forgotPassword = 'forgotPassword';
+  static const dontHaveAccount = 'dontHaveAccount';
+  static const continueWithoutSigningIn = 'continueWithoutSigningIn';
+  static const enterPhoneNumber = 'enterPhoneNumber';
+  static const getOTP = 'getOTP';
+  static const or = 'or';
+  static const setNewPassword = 'setNewPassword';
+  static const completeRecovery = 'completeRecovery';
+  static const otpConfirmation = 'otpConfirmation';
+  static const enterOTP = 'enterOTP';
+  static const confirm = 'confirm';
+
+  // Məhsullar və kateqoriyalar
+  static const ad = 'ad';
+  static const details = 'details';
+  static const recentlyViewed = 'recentlyViewed';
+  static const seeAll = 'seeAll';
+  static const popularProducts = 'popularProducts';
+  static const popularCategories = 'popularCategories';
+  static const topDeals = 'topDeals';
+  static const partners = 'partners';
+  static const home = 'home';
+  static const favorites = 'favorites';
+  static const comparison = 'comparison';
+  static const account = 'account';
+  static const sort = 'sort';
+  static const popular = 'popular';
+  static const topDiscounts = 'topDiscounts';
+  static const lowestPrice = 'lowestPrice';
+  static const highestPrice = 'highestPrice';
+  static const results = 'results';
+  static const filter = 'filter';
+  static const categories = 'categories';
+  static const brands = 'brands';
+  static const specifications = 'specifications';
+  static const priceRange = 'priceRange';
+  static const minimum = 'minimum';
+  static const onlyDifferentProperties = 'only_different_properties';
+  static const maximum = 'maximum';
+  static const discountedProductsOnly = 'discountedProductsOnly';
+  static const apply = 'apply';
+  static const products = 'products';
+  static const stores = 'stores';
+  static const navigate = 'navigate';
+  static const call = 'call';
+  static const share = 'share';
+  static const searchHistory = 'searchHistory';
+  static const noResults = 'noResults';
+  static const discoverProducts = 'discoverProducts';
+  static const buyFromStore = 'buyFromStore';
+  static const productSpecifications = 'productSpecifications';
+  static const offers = 'offers';
+  static const bestDeal = 'bestDeal';
+  static const moreFromStore = 'moreFromStore';
+  static const noFavorites = 'noFavorites';
+  static const signupToAddFavorites = 'signupToAddFavorites';
+  static const noComparison = 'noComparison';
+  static const signupToAddComparison = 'signupToAddComparison';
+  static const addProductToComparison = 'addProductToComparison';
+  static const signupToAddAlarmClock = 'signupToAddAlarmClock';
+  static const signupToSeeNotifications = 'signupToSeeNotifications';
+
+  // Hesab və parametrlər
+  static const priceAlert = 'priceAlert';
+  static const bonusCards = 'bonusCards';
+  static const parameters = 'parameters';
+  static const contact = 'contact';
+  static const aboutGringo = 'aboutGringo';
+  static const rateGringo = 'rateGringo';
+  static const inviteFriends = 'inviteFriends';
+  static const accountDetails = 'accountDetails';
+  static const signOut = 'signOut';
+  static const currentPrice = 'currentPrice';
+  static const priceNotification = 'priceNotification';
+  static const price = 'price';
+  static const noPriceNotification = 'noPriceNotification';
+  static const barcode = 'barcode';
+  static const noBonusCards = 'noBonusCards';
+  static const add = 'add';
+  static const addBonusCard = 'addBonusCard';
+  static const scanBonusCard = 'scanBonusCard';
+  static const importFromPhotos = 'importFromPhotos';
+  static const enterDetailsManually = 'enterDetailsManually';
+  static const bonusCardDetails = 'bonusCardDetails';
+  static const storeName = 'storeName';
+  static const bonusCardColor = 'bonusCardColor';
+  static const signupToAddBonusCards = 'signupToAddBonusCards';
+  static const noNotifications = 'noNotifications';
+
+  // Parametrlər
+  static const interfaceMode = 'interfaceMode';
+  static const fontSize = 'fontSize';
+  static const vibrations = 'vibrations';
+  static const light = 'light';
+  static const dark = 'dark';
+  static const small = 'small';
+  static const medium = 'medium';
+  static const large = 'large';
+}
