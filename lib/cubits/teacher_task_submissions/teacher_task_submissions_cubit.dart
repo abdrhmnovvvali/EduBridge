@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:eduroom/core/helpers/logger.dart';
 import 'package:eduroom/data/contracts/teacher_data/teacher_data_contract.dart';
+import 'package:eduroom/data/models/remote/request/teacher/submit_task_feedback_params.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_task_submission_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,14 +38,21 @@ class TeacherTaskSubmissionsCubit extends Cubit<TeacherTaskSubmissionsState> {
     }
   }
 
-  Future<void> submitFeedback(int submissionId, String feedback) async {
+  Future<void> submitFeedback(
+    int submissionId,
+    String feedback, {
+    TaskFeedbackReviewStatus status = TaskFeedbackReviewStatus.reviewed,
+  }) async {
     try {
       final hasInternet = await _internetCheckerService.hasInternetConnection();
       if (!hasInternet) {
         emit(const TeacherTaskSubmissionsError(failure: GlobalFailure.network()));
         return;
       }
-      await _contract.submitTaskFeedback(submissionId, feedback);
+      await _contract.submitTaskFeedback(
+        submissionId,
+        SubmitTaskFeedbackParams(feedback: feedback, status: status),
+      );
       final currentState = this.state;
       if (currentState is TeacherTaskSubmissionsSuccess) {
         load(currentState.taskId);

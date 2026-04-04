@@ -142,7 +142,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
 // Spacer(),
                       // _buildBottomIllustration(),
                       70.verticalSpace,
-                      // SvgPicture.asset("assets/svg/attendance.svg")
+                      SvgPicture.asset("assets/svg/attendance.svg")
                     ],
                   );
                 }

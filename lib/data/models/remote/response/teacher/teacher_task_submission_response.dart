@@ -29,13 +29,13 @@ class TeacherTaskSubmissionResponse extends BaseModel {
         taskId: json["task_id"] ?? json["taskId"] ?? 0,
         studentId: json["student_id"] ?? json["studentId"] ?? 0,
         studentName: json["student_name"] ?? json["studentName"],
-        content: json["content"],
+        content: json["content"] ?? json["answer"],
         attachmentUrl: json["attachment_url"] ?? json["attachmentUrl"],
         status: json["status"] ?? "pending",
         submittedAt: json["submitted_at"] != null || json["submittedAt"] != null
             ? DateTime.tryParse((json["submitted_at"] ?? json["submittedAt"]).toString())
             : null,
-        feedback: json["feedback"],
+        feedback: json["feedback"] ?? json["teacherFeedback"] ?? json["teacher_feedback"],
       );
 
   @override

@@ -1,4 +1,5 @@
 import 'package:eduroom/core/constants/app_colors.dart';
+import 'package:eduroom/data/models/remote/request/teacher/submit_task_feedback_params.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_task_submission_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,7 @@ class SubmissionCard extends StatefulWidget {
   const SubmissionCard({super.key, required this.submission, required this.onFeedback});
 
   final TeacherTaskSubmissionResponse submission;
-  final void Function(String feedback) onFeedback;
+  final void Function(String feedback, TaskFeedbackReviewStatus status) onFeedback;
 
   @override
   State<SubmissionCard> createState() => _SubmissionCardState();
@@ -16,6 +17,7 @@ class SubmissionCard extends StatefulWidget {
 
 class _SubmissionCardState extends State<SubmissionCard> {
   late final TextEditingController _controller;
+  TaskFeedbackReviewStatus _reviewStatus = TaskFeedbackReviewStatus.reviewed;
 
   @override
   void initState() {
@@ -66,7 +68,19 @@ class _SubmissionCardState extends State<SubmissionCard> {
               child: Text('Submitted: ${DateFormat('MMM d, HH:mm').format(submission.submittedAt!)}', style: TextStyle(fontSize: 12.sp, color: AppColors.black300)),
             ),
           SizedBox(height: 12.h),
+          Text('Review', style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600, color: AppColors.black500)),
+          SizedBox(height: 8.h),
+          SegmentedButton<TaskFeedbackReviewStatus>(
+            segments: const [
+              ButtonSegment(value: TaskFeedbackReviewStatus.reviewed, label: Text('Reviewed')),
+              ButtonSegment(value: TaskFeedbackReviewStatus.returned, label: Text('Returned')),
+            ],
+            selected: {_reviewStatus},
+            onSelectionChanged: (set) => setState(() => _reviewStatus = set.first),
+          ),
+          SizedBox(height: 12.h),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: TextField(
@@ -81,7 +95,11 @@ class _SubmissionCardState extends State<SubmissionCard> {
               ),
               SizedBox(width: 8.w),
               ElevatedButton(
-                onPressed: () => onFeedback(_controller.text.trim()),
+                onPressed: () {
+                  final text = _controller.text.trim();
+                  if (text.isEmpty) return;
+                  onFeedback(text, _reviewStatus);
+                },
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.bgColor, foregroundColor: Colors.white),
                 child: const Text('Send'),
               ),

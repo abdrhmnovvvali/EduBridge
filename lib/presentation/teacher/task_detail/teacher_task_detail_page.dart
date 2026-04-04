@@ -44,7 +44,8 @@ class TeacherTaskDetailPage extends StatelessWidget {
               itemCount: submissions.length,
               itemBuilder: (_, i) => SubmissionCard(
                 submission: submissions[i],
-                onFeedback: (feedback) => context.read<TeacherTaskSubmissionsCubit>().submitFeedback(submissions[i].id, feedback),
+                onFeedback: (feedback, status) =>
+                    context.read<TeacherTaskSubmissionsCubit>().submitFeedback(submissions[i].id, feedback, status: status),
               ),
             );
           }

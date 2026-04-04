@@ -4,6 +4,7 @@ import 'package:eduroom/data/models/remote/request/teacher/create_session_params
 import 'package:eduroom/data/models/remote/request/teacher/create_task_params.dart';
 import 'package:eduroom/data/models/remote/request/teacher/link_material_params.dart';
 import 'package:eduroom/data/models/remote/request/teacher/mark_attendance_params.dart';
+import 'package:eduroom/data/models/remote/request/teacher/submit_task_feedback_params.dart';
 import 'package:eduroom/data/models/remote/request/teacher/upsert_grade_params.dart';
 import 'package:eduroom/data/models/remote/response/student/material_response.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
@@ -42,8 +43,8 @@ class TeacherDataRepository implements TeacherDataContract {
       _dataSource.getTaskSubmissions(taskId);
 
   @override
-  Future<void> submitTaskFeedback(int submissionId, String feedback) =>
-      _dataSource.submitTaskFeedback(submissionId, feedback);
+  Future<void> submitTaskFeedback(int submissionId, SubmitTaskFeedbackParams params) =>
+      _dataSource.submitTaskFeedback(submissionId, params);
 
   @override
   Future<MaterialResponse> linkMaterial(LinkMaterialParams params) => _dataSource.linkMaterial(params);
