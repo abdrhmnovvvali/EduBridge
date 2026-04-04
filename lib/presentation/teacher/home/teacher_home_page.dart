@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eduroom/core/constants/app_assets.dart';
 import 'package:eduroom/core/constants/app_colors.dart';
@@ -15,11 +17,34 @@ import '../../../cubits/teacher_profile/teacher_profile_cubit.dart';
 class TeacherHomePage extends StatelessWidget {
   const TeacherHomePage({super.key});
 
+  Future<void> _onRefresh(BuildContext context) async {
+    final cubit = context.read<TeacherProfileCubit>();
+    final done = cubit.stream
+        .firstWhere(
+          (s) =>
+              s is TeacherProfileSuccess ||
+              s is TeacherProfileError ||
+              s is TeacherProfileNetworkError,
+        )
+        .timeout(const Duration(seconds: 25));
+    cubit.getTeacherProfile();
+    try {
+      await done;
+    } on TimeoutException {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
+      backgroundColor: AppColors.primaryGradientTop,
+      body: RefreshIndicator(
+        color: Colors.white,
+        backgroundColor: AppColors.primaryGradientTop,
+        displacement: 48,
+        onRefresh: () => _onRefresh(context),
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          slivers: [
           SliverToBoxAdapter(
             child: SizedBox(
               height: 334.h,
@@ -240,6 +265,7 @@ class TeacherHomePage extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

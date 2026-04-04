@@ -57,6 +57,8 @@ class AppColors {
 
 
 
-  static const primary= LinearGradient(colors: [Color(0xFF2855AE),Color(0xFF7292CF)]);
+  /// Home header gradient-in yuxarı rəngi (overscroll / Scaffold arxa fonu üçün).
+  static const primaryGradientTop = Color(0xFF2855AE);
+  static const primary = LinearGradient(colors: [primaryGradientTop, Color(0xFF7292CF)]);
   static const bgColor=Color.fromARGB(255, 86, 125, 199);
 }
