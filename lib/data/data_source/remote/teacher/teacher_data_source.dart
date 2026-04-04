@@ -7,6 +7,7 @@ import 'package:eduroom/data/models/remote/request/teacher/link_material_params.
 import 'package:eduroom/data/models/remote/request/teacher/mark_attendance_params.dart';
 import 'package:eduroom/data/models/remote/request/teacher/submit_task_feedback_params.dart';
 import 'package:eduroom/data/models/remote/request/teacher/upsert_grade_params.dart';
+import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/material_response.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_class_response.dart';
@@ -75,6 +76,19 @@ class TeacherDataSource {
 
   Future<void> submitTaskFeedback(int submissionId, SubmitTaskFeedbackParams params) async {
     await _dio.post(Endpoints.teacherTaskFeedback(submissionId), data: params.toJson());
+  }
+
+  Future<MaterialsPageResponse> getMaterials({int page = 1, int limit = 20, int? classId}) async {
+    final safeLimit = limit.clamp(1, 50);
+    final result = await _dio.get(
+      Endpoints.teacherMaterials,
+      queryParameters: {
+        'page': page,
+        'limit': safeLimit,
+        if (classId != null) 'classId': classId,
+      },
+    );
+    return MaterialsPageResponse.fromResponseBody(result.data);
   }
 
   Future<MaterialResponse> linkMaterial(LinkMaterialParams params) async {

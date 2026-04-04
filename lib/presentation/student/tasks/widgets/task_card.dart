@@ -10,8 +10,20 @@ class TaskCard extends StatelessWidget {
   final TaskResponse task;
   final VoidCallback? onTap;
 
+  static String _taskContextLine(TaskResponse task) {
+    final parts = <String>[];
+    if (task.className != null && task.className!.trim().isNotEmpty) {
+      parts.add(task.className!.trim());
+    }
+    if (task.courseName != null && task.courseName!.trim().isNotEmpty) {
+      parts.add(task.courseName!.trim());
+    }
+    return parts.join(' · ');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final contextLine = _taskContextLine(task);
     final card = Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(16.w),
@@ -32,6 +44,14 @@ class TaskCard extends StatelessWidget {
                 Icon(Icons.chevron_right, color: AppColors.graySoft25, size: 22.r),
             ],
           ),
+          if (contextLine.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: 6.h),
+              child: Text(
+                contextLine,
+                style: TextStyle(fontSize: 12.sp, color: AppColors.black300, fontWeight: FontWeight.w500),
+              ),
+            ),
           if (task.description != null && task.description!.isNotEmpty)
             Padding(
               padding: EdgeInsets.only(top: 8.h),
@@ -41,11 +61,6 @@ class TaskCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text('Due: ${DateFormat('MMM d, y').format(task.dueAt!)}', style: TextStyle(fontSize: 12.sp, color: AppColors.black300)),
-            ),
-          if (task.className != null)
-            Padding(
-              padding: EdgeInsets.only(top: 4.h),
-              child: Text(task.className!, style: TextStyle(fontSize: 12.sp, color: AppColors.graySoft25)),
             ),
         ],
       ),

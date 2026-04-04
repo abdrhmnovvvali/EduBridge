@@ -14,7 +14,7 @@ class StudentMaterialsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Materials'),
+        title: const Text('Files'),
         backgroundColor: AppColors.bgColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -32,14 +32,30 @@ class StudentMaterialsPage extends StatelessWidget {
           if (state is StudentMaterialsSuccess) {
             final materials = state.materials;
             if (materials.isEmpty) {
-              return Center(
-                child: Text('No materials yet', style: TextStyle(fontSize: 16.sp, color: AppColors.black500)),
+              return RefreshIndicator(
+                onRefresh: () => context.read<StudentMaterialsCubit>().load(),
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(height: 120.h),
+                    Center(
+                      child: Text(
+                        'No file materials yet',
+                        style: TextStyle(fontSize: 16.sp, color: AppColors.black500),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
-            return ListView.builder(
-              padding: EdgeInsets.all(20.w),
-              itemCount: materials.length,
-              itemBuilder: (_, i) => MaterialCard(material: materials[i]),
+            return RefreshIndicator(
+              onRefresh: () => context.read<StudentMaterialsCubit>().load(),
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.all(20.w),
+                itemCount: materials.length,
+                itemBuilder: (_, i) => MaterialCard(material: materials[i]),
+              ),
             );
           }
           return const SizedBox.shrink();

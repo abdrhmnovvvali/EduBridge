@@ -4,7 +4,7 @@ import 'package:eduroom/data/models/remote/response/student/attendance_list_resp
 import 'package:eduroom/data/models/remote/response/student/grade_response.dart';
 import 'package:eduroom/data/models/remote/response/student/invoice_response.dart';
 import 'package:eduroom/data/models/remote/response/student/leaderboard_response.dart';
-import 'package:eduroom/data/models/remote/response/student/material_response.dart';
+import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/notification_response.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
 
@@ -21,7 +21,8 @@ class StudentDataRepository implements StudentDataContract {
       _dataSource.submitTask(taskId, comment: comment, filePath: filePath);
 
   @override
-  Future<List<MaterialResponse>> getMaterials() => _dataSource.getMaterials();
+  Future<MaterialsPageResponse> getMaterials({int page = 1, int limit = 20, int? classId}) =>
+      _dataSource.getMaterials(page: page, limit: limit, classId: classId);
 
   @override
   Future<AttendanceListResponse> getAttendance({int? month, int? year}) =>

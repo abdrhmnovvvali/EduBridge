@@ -9,10 +9,20 @@ sealed class StudentMaterialsState extends Equatable {
 final class StudentMaterialsInitial extends StudentMaterialsState {}
 final class StudentMaterialsLoading extends StudentMaterialsState {}
 final class StudentMaterialsSuccess extends StudentMaterialsState {
-  const StudentMaterialsSuccess(this.materials);
+  const StudentMaterialsSuccess({
+    required this.materials,
+    required this.page,
+    required this.totalPages,
+    required this.total,
+  });
+
   final List<MaterialResponse> materials;
+  final int page;
+  final int totalPages;
+  final int total;
+
   @override
-  List<Object?> get props => [materials];
+  List<Object?> get props => [materials, page, totalPages, total];
 }
 final class StudentMaterialsError extends StudentMaterialsState {
   const StudentMaterialsError({required this.failure});

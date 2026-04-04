@@ -16,6 +16,7 @@ import 'package:eduroom/cubits/teacher_create_session/teacher_create_session_cub
 import 'package:eduroom/cubits/teacher_create_task/teacher_create_task_cubit.dart';
 import 'package:eduroom/cubits/teacher_grades/teacher_grades_cubit.dart';
 import 'package:eduroom/cubits/teacher_materials/teacher_materials_cubit.dart';
+import 'package:eduroom/cubits/teacher_materials_list/teacher_materials_list_cubit.dart';
 import 'package:eduroom/cubits/teacher_profile/teacher_profile_cubit.dart';
 import 'package:eduroom/cubits/teacher_task_submissions/teacher_task_submissions_cubit.dart';
 import 'package:eduroom/cubits/teacher_tasks/teacher_tasks_cubit.dart';
@@ -44,6 +45,7 @@ import 'package:eduroom/presentation/teacher/create_session/teacher_create_sessi
 import 'package:eduroom/presentation/teacher/create_task/teacher_create_task_page.dart';
 import 'package:eduroom/presentation/teacher/grades/teacher_grades_page.dart';
 import 'package:eduroom/presentation/teacher/home/teacher_home_page.dart';
+import 'package:eduroom/presentation/teacher/materials/teacher_link_material_page.dart';
 import 'package:eduroom/presentation/teacher/materials/teacher_materials_page.dart';
 import 'package:eduroom/presentation/teacher/session_detail/teacher_session_detail_page.dart';
 import 'package:eduroom/presentation/teacher/task_detail/teacher_task_detail_page.dart';
@@ -105,9 +107,24 @@ class Pager {
       MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => locator<TeacherClassesCubit>()..load()),
-          BlocProvider(create: (_) => locator<TeacherMaterialsCubit>()),
+          BlocProvider(
+            create: (_) => TeacherMaterialsListCubit(
+              locator.get<InternetCheckerService>(),
+              locator.get<TeacherDataContract>(),
+              classFilterId: selectedClass?.id,
+            )..load(),
+          ),
         ],
         child: TeacherMaterialsPage(selectedClass: selectedClass),
+      );
+
+  static Widget teacherLinkMaterial(TeacherClassResponse? selectedClass) =>
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => locator<TeacherClassesCubit>()..load()),
+          BlocProvider(create: (_) => locator<TeacherMaterialsCubit>()),
+        ],
+        child: TeacherLinkMaterialPage(selectedClass: selectedClass),
       );
 
   static Widget teacherGrades(TeacherClassResponse? selectedClass) =>

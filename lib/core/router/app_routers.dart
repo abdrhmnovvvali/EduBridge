@@ -40,6 +40,7 @@ class AppRoutes {
   static const String teacherCreateTask = '/teacherCreateTask';
   static const String teacherTaskDetail = '/teacherTaskDetail';
   static const String teacherMaterials = '/teacherMaterials';
+  static const String teacherLinkMaterial = '/teacherLinkMaterial';
   static const String teacherGrades = '/teacherGrades';
   static const String teacherCreateSession = '/teacherCreateSession';
   static const String teacherSessionDetail = '/teacherSessionDetail';
@@ -208,6 +209,14 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final clazz = state.extra as TeacherClassResponse?;
         return Pager.teacherMaterials(clazz);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.teacherLinkMaterial,
+      name: 'teacherLinkMaterial',
+      builder: (context, state) {
+        final clazz = state.extra as TeacherClassResponse?;
+        return Pager.teacherLinkMaterial(clazz);
       },
     ),
     GoRoute(

@@ -6,7 +6,7 @@ import 'package:eduroom/data/models/remote/response/student/attendance_response.
 import 'package:eduroom/data/models/remote/response/student/grade_response.dart';
 import 'package:eduroom/data/models/remote/response/student/invoice_response.dart';
 import 'package:eduroom/data/models/remote/response/student/leaderboard_response.dart';
-import 'package:eduroom/data/models/remote/response/student/material_response.dart';
+import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/notification_response.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
 
@@ -33,10 +33,17 @@ class StudentDataSource {
     await _dio.post(Endpoints.studentTaskSubmit(taskId), data: FormData.fromMap(map));
   }
 
-  Future<List<MaterialResponse>> getMaterials() async {
-    final result = await _dio.get(Endpoints.studentMaterials);
-    final list = result.data is List ? result.data as List : [];
-    return list.map((e) => MaterialResponse.fromJson(e as Map<String, dynamic>)).toList();
+  Future<MaterialsPageResponse> getMaterials({int page = 1, int limit = 20, int? classId}) async {
+    final safeLimit = limit.clamp(1, 50);
+    final result = await _dio.get(
+      Endpoints.studentMaterials,
+      queryParameters: {
+        'page': page,
+        'limit': safeLimit,
+        if (classId != null) 'classId': classId,
+      },
+    );
+    return MaterialsPageResponse.fromResponseBody(result.data);
   }
 
   Future<AttendanceListResponse> getAttendance({int? month, int? year}) async {
