@@ -6,7 +6,7 @@ import 'package:eduroom/data/contracts/teacher_data/teacher_data_contract.dart';
 import 'package:eduroom/data/models/remote/request/teacher/create_task_params.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_class_response.dart';
 import 'package:equatable/equatable.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -49,14 +49,22 @@ class TeacherCreateTaskCubit extends Cubit<TeacherCreateTaskState> {
   }
 
   Future<void> pickFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null || result.files.isEmpty) return;
-    final f = result.files.single;
-    final path = f.path;
-    if (path == null || path.isEmpty) return;
+    const materials = XTypeGroup(
+      label: 'Materials',
+      extensions: <String>[
+        'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'rtf',
+        'zip', 'rar', '7z',
+        'jpg', 'jpeg', 'png', 'gif', 'webp',
+        'mp4', 'mov',
+      ],
+    );
+    final file = await openFile(acceptedTypeGroups: const [materials]);
+    if (file == null) return;
+    final path = file.path;
+    if (path.isEmpty) return;
     emit(state.copyWith(
       pickedFilePath: path,
-      pickedFileName: f.name,
+      pickedFileName: file.name,
       clearFailure: true,
     ));
   }
