@@ -25,10 +25,11 @@ class AttendanceCalendar extends StatelessWidget {
     final isPresent = !isOutside &&
         presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
     Color? bgColor;
-    if (isAbsent) {
-      bgColor = AppColors.red500;
-    } else if (isPresent) {
+    // Əvvəlcə iştirak — eyni gündə zidd qeyd olsa belə yaşıl görünsün.
+    if (isPresent) {
       bgColor = AppColors.presentGreen;
+    } else if (isAbsent) {
+      bgColor = AppColors.red500;
     } else if (!isOutside && date.weekday == DateTime.sunday) {
       bgColor = AppColors.graySoft25.withOpacity(0.25);
     }
@@ -121,16 +122,6 @@ class AttendanceCalendar extends StatelessWidget {
                 final d = DateTime(date.year, date.month, date.day);
                 final isAbsent = absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
                 final isPresent = presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
-                if (isAbsent) {
-                  return Positioned(
-                    bottom: 2,
-                    child: Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(color: AppColors.red500, shape: BoxShape.circle),
-                    ),
-                  );
-                }
                 if (isPresent) {
                   return Positioned(
                     bottom: 2,
@@ -138,6 +129,16 @@ class AttendanceCalendar extends StatelessWidget {
                       width: 6,
                       height: 6,
                       decoration: const BoxDecoration(color: AppColors.presentGreen, shape: BoxShape.circle),
+                    ),
+                  );
+                }
+                if (isAbsent) {
+                  return Positioned(
+                    bottom: 2,
+                    child: Container(
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(color: AppColors.red500, shape: BoxShape.circle),
                     ),
                   );
                 }

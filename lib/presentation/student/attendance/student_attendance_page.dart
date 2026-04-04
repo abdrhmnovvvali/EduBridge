@@ -19,48 +19,38 @@ class StudentAttendancePage extends StatefulWidget {
 class _StudentAttendancePageState extends State<StudentAttendancePage> {
   DateTime _focusedMonth = DateTime.now();
 
-  Set<DateTime> _absentDates(List<AttendanceResponse> items) {
-    return items
-        .where(
-          (e) => e.status.toUpperCase() == 'ABSENT' && e.sessionDate != null,
-        )
-        .map(
-          (e) => DateTime(
-            e.sessionDate!.year,
-            e.sessionDate!.month,
-            e.sessionDate!.day,
-          ),
-        )
-        .toSet();
+  /// Hər təqvim günü üçün: hər hansı `present`/`late` qeyd varsa yaşıl, yalnız absent-dirsə qırmızı.
+  ({Set<DateTime> presentDates, Set<DateTime> absentDates}) _calendarDaySets(
+    List<AttendanceResponse> items,
+  ) {
+    final byDay = <DateTime, List<String>>{};
+    for (final e in items) {
+      final d = e.sessionDate;
+      if (d == null) continue;
+      final key = DateTime(d.year, d.month, d.day);
+      byDay.putIfAbsent(key, () => []).add(e.status);
+    }
+    final present = <DateTime>{};
+    final absent = <DateTime>{};
+    for (final entry in byDay.entries) {
+      var anyPresent = false;
+      var anyAbsent = false;
+      for (final raw in entry.value) {
+        final s = raw.trim().toLowerCase();
+        if (s == 'present' || s == 'late') anyPresent = true;
+        if (s == 'absent') anyAbsent = true;
+      }
+      if (anyPresent) {
+        present.add(entry.key);
+      } else if (anyAbsent) {
+        absent.add(entry.key);
+      }
+    }
+    return (presentDates: present, absentDates: absent);
   }
 
-  Set<DateTime> _presentDates(List<AttendanceResponse> items) {
-    return items
-        .where((e) {
-          final s = e.status.trim().toUpperCase();
-          final isPresentOrLate = s == 'PRESENT' || s == 'LATE';
-          return isPresentOrLate && e.sessionDate != null;
-        })
-        .map(
-          (e) => DateTime(
-            e.sessionDate!.year,
-            e.sessionDate!.month,
-            e.sessionDate!.day,
-          ),
-        )
-        .toSet();
-  }
-
-  int _presentCountInMonth(List<AttendanceResponse> items, DateTime month) {
-    return _presentDates(items)
-        .where((d) => d.year == month.year && d.month == month.month)
-        .length;
-  }
-
-  int _absentCountInMonth(List<AttendanceResponse> items, DateTime month) {
-    return _absentDates(items)
-        .where((d) => d.year == month.year && d.month == month.month)
-        .length;
+  int _countInMonth(Set<DateTime> dates, DateTime month) {
+    return dates.where((d) => d.year == month.year && d.month == month.month).length;
   }
 
   @override
@@ -147,18 +137,17 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                   );
                 }
                 if (state is StudentAttendanceSuccess) {
-                  final absentDates = _absentDates(state.items);
-                  final presentDates = _presentDates(state.items);
-                  final presentCount = _presentCountInMonth(state.items, _focusedMonth);
-                  final absentMonthCount = _absentCountInMonth(state.items, _focusedMonth);
+                  final sets = _calendarDaySets(state.items);
+                  final presentCount = _countInMonth(sets.presentDates, _focusedMonth);
+                  final absentMonthCount = _countInMonth(sets.absentDates, _focusedMonth);
 
                   return Column(
                     children: [
                       AttendanceCalendar(
                         focusedMonth: _focusedMonth,
                         onMonthChanged: (d) => setState(() => _focusedMonth = d),
-                        absentDates: absentDates,
-                        presentDates: presentDates,
+                        absentDates: sets.absentDates,
+                        presentDates: sets.presentDates,
                       ),
                       SizedBox(height: 30.h),
                       Padding(

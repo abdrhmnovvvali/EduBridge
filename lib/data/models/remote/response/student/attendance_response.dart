@@ -15,6 +15,13 @@ class AttendanceResponse extends BaseModel {
     this.note,
   });
 
+  static String _parseStatus(dynamic v) {
+    if (v == null) return 'present';
+    final s = v.toString().trim();
+    if (s.isEmpty) return 'present';
+    return s.toLowerCase();
+  }
+
   factory AttendanceResponse.fromJson(Map<String, dynamic> json) {
     DateTime? sessionDate;
     String? className;
@@ -23,6 +30,8 @@ class AttendanceResponse extends BaseModel {
       sessionDate = DateTime.tryParse(json["session_date"].toString());
     } else if (json["sessionDate"] != null) {
       sessionDate = DateTime.tryParse(json["sessionDate"].toString());
+    } else if (json["starts_at"] != null || json["startsAt"] != null) {
+      sessionDate = DateTime.tryParse((json["starts_at"] ?? json["startsAt"]).toString());
     } else if (json["markedAt"] != null || json["marked_at"] != null) {
       sessionDate = DateTime.tryParse((json["markedAt"] ?? json["marked_at"]).toString());
     }
@@ -42,8 +51,8 @@ class AttendanceResponse extends BaseModel {
     className ??= json["className"] ?? json["class_name"]?.toString();
 
     return AttendanceResponse(
-      id: json["id"],
-      status: (json["status"] ?? "present").toString(),
+      id: int.tryParse(json["id"]?.toString() ?? '0') ?? 0,
+      status: _parseStatus(json["status"]),
       sessionDate: sessionDate,
       className: className,
       note: json["note"]?.toString(),
