@@ -1,7 +1,7 @@
 class Endpoints {
   Endpoints._();
 
-  static const _baseUrl = 'http://192.168.0.102:3000';
+  static const _baseUrl = 'http://10.50.0.115:3000';
 
   // Auth
   static const teacherLogin = '$_baseUrl/teacher/login';

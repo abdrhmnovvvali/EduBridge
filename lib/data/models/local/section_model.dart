@@ -3,7 +3,7 @@ class SectionModel {
   final String name;
 
   SectionModel({
-    required this..name,
+    required this.name,
     required this.icon,
   });
 

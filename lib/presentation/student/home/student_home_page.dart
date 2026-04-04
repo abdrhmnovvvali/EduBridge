@@ -38,7 +38,7 @@ class StudentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryGradientTop,
+      backgroundColor: AppColors.white,
       body: RefreshIndicator(
         color: Colors.white,
         backgroundColor: AppColors.primaryGradientTop,
