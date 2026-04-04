@@ -13,6 +13,8 @@ class AppColors {
 
   static const secondary500 = Color(0xFF98FF59);
   static const secondary700 = Color.fromRGBO(35, 201, 101, 1);
+  /// Təqvim / attendance: «present» günlər üçün yaşıl.
+  static const presentGreen = Color(0xFF43A047);
 
   static const transparent = Colors.transparent;
 

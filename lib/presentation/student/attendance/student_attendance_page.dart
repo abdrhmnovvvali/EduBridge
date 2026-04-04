@@ -37,8 +37,9 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
   Set<DateTime> _presentDates(List<AttendanceResponse> items) {
     return items
         .where((e) {
-          final s = e.status.toUpperCase();
-          return (s == 'PRESENT' || s == 'LATE') && e.sessionDate != null;
+          final s = e.status.trim().toUpperCase();
+          final isPresentOrLate = s == 'PRESENT' || s == 'LATE';
+          return isPresentOrLate && e.sessionDate != null;
         })
         .map(
           (e) => DateTime(
@@ -176,7 +177,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                               child: _LegendChip(
                                 label: 'Present',
                                 count: presentCount,
-                                color: AppColors.secondary700,
+                                color: AppColors.presentGreen,
                               ),
                             ),
                           ],

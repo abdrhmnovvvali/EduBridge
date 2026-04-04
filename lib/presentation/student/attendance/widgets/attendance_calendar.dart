@@ -18,6 +18,41 @@ class AttendanceCalendar extends StatelessWidget {
   final Set<DateTime> absentDates;
   final Set<DateTime> presentDates;
 
+  Widget _dayCell(DateTime date, {required bool isOutside}) {
+    final d = DateTime(date.year, date.month, date.day);
+    final isAbsent = !isOutside &&
+        absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+    final isPresent = !isOutside &&
+        presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+    Color? bgColor;
+    if (isAbsent) {
+      bgColor = AppColors.red500;
+    } else if (isPresent) {
+      bgColor = AppColors.presentGreen;
+    } else if (!isOutside && date.weekday == DateTime.sunday) {
+      bgColor = AppColors.graySoft25.withOpacity(0.25);
+    }
+    final coloredDay = isAbsent || isPresent;
+    return Container(
+      margin: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        shape: BoxShape.circle,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        '${date.day}',
+        style: TextStyle(
+          fontSize: 13.sp,
+          color: isOutside
+              ? AppColors.black300
+              : (coloredDay ? Colors.white : AppColors.black900),
+          fontWeight: coloredDay ? FontWeight.w600 : FontWeight.normal,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,16 +110,11 @@ class AttendanceCalendar extends StatelessWidget {
                 color: AppColors.graySoft25.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
-              todayDecoration: const BoxDecoration(
-                color: AppColors.bgColor,
-                shape: BoxShape.circle,
-              ),
-              todayTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-              selectedDecoration: const BoxDecoration(
-                color: AppColors.bgColor,
-                shape: BoxShape.circle,
-              ),
-              selectedTextStyle: const TextStyle(color: Colors.white),
+              // Gün rəngləri tam calendarBuilders ilə (present=yaşıl) idarə olunur.
+              todayDecoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
+              todayTextStyle: const TextStyle(color: Colors.transparent),
+              selectedDecoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
+              selectedTextStyle: const TextStyle(color: Colors.transparent),
             ),
             calendarBuilders: CalendarBuilders(
               markerBuilder: (context, date, events) {
@@ -107,47 +137,19 @@ class AttendanceCalendar extends StatelessWidget {
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(color: AppColors.secondary700, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(color: AppColors.presentGreen, shape: BoxShape.circle),
                     ),
                   );
                 }
                 return null;
               },
-              defaultBuilder: (context, date, focusedDay) {
-                final d = DateTime(date.year, date.month, date.day);
-                final isOutside = date.month != focusedMonth.month;
-                final isAbsent = !isOutside &&
-                    absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
-                final isPresent = !isOutside &&
-                    presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
-                Color? bgColor;
-                if (isAbsent) {
-                  bgColor = AppColors.red500;
-                } else if (isPresent) {
-                  bgColor = AppColors.secondary700;
-                } else if (!isOutside && date.weekday == DateTime.sunday) {
-                  bgColor = AppColors.graySoft25.withOpacity(0.25);
-                }
-                final coloredDay = isAbsent || isPresent;
-                return Container(
-                  margin: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${date.day}',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      color: isOutside
-                          ? AppColors.black300
-                          : (coloredDay ? Colors.white : AppColors.black900),
-                      fontWeight: coloredDay ? FontWeight.w600 : FontWeight.normal,
-                    ),
-                  ),
-                );
-              },
+              defaultBuilder: (context, date, _) =>
+                  _dayCell(date, isOutside: date.month != focusedMonth.month),
+              todayBuilder: (context, date, _) =>
+                  _dayCell(date, isOutside: date.month != focusedMonth.month),
+              selectedBuilder: (context, date, _) =>
+                  _dayCell(date, isOutside: date.month != focusedMonth.month),
+              outsideBuilder: (context, date, _) => _dayCell(date, isOutside: true),
             ),
           ),
         ],
