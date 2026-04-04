@@ -12,6 +12,7 @@ import 'package:eduroom/cubits/splash/splash_cubit.dart';
 import 'package:eduroom/cubits/teacher_attendance/teacher_attendance_cubit.dart';
 import 'package:eduroom/cubits/teacher_classes/teacher_classes_cubit.dart';
 import 'package:eduroom/cubits/teacher_create_session/teacher_create_session_cubit.dart';
+import 'package:eduroom/cubits/teacher_create_task/teacher_create_task_cubit.dart';
 import 'package:eduroom/cubits/teacher_grades/teacher_grades_cubit.dart';
 import 'package:eduroom/cubits/teacher_materials/teacher_materials_cubit.dart';
 import 'package:eduroom/cubits/teacher_profile/teacher_profile_cubit.dart';
@@ -20,6 +21,8 @@ import 'package:eduroom/cubits/teacher_tasks/teacher_tasks_cubit.dart';
 import 'package:eduroom/cubits/teacher_class_students/teacher_class_students_cubit.dart';
 import 'package:eduroom/cubits/teacher_class_sessions/teacher_class_sessions_cubit.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
+import 'package:eduroom/core/services/internet_checker_service.dart';
+import 'package:eduroom/data/contracts/teacher_data/teacher_data_contract.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_class_response.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_session_response.dart';
 import 'package:eduroom/presentation/shared/login/login_page.dart';
@@ -78,8 +81,15 @@ class Pager {
         providers: [
           BlocProvider(create: (_) => locator<TeacherClassesCubit>()..load()),
           BlocProvider(create: (_) => locator<TeacherTasksCubit>()),
+          BlocProvider(
+            create: (_) => TeacherCreateTaskCubit(
+              locator.get<InternetCheckerService>(),
+              locator.get<TeacherDataContract>(),
+              initialClass: selectedClass,
+            ),
+          ),
         ],
-        child: TeacherCreateTaskPage(selectedClass: selectedClass),
+        child: const TeacherCreateTaskPage(),
       );
 
   static Widget teacherTaskDetail(TaskResponse task) =>

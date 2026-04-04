@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:eduroom/core/constants/endpoints.dart';
 import 'package:eduroom/core/network/dio/dio_client.dart';
 import 'package:eduroom/data/models/remote/request/teacher/create_session_params.dart';
@@ -79,6 +80,24 @@ class TeacherDataSource {
   Future<MaterialResponse> linkMaterial(LinkMaterialParams params) async {
     final result = await _dio.post(Endpoints.teacherMaterialsLink, data: params.toJson());
     return MaterialResponse.fromJson(result.data as Map<String, dynamic>);
+  }
+
+  Future<MaterialResponse?> uploadMaterialFile({
+    required String filePath,
+    required int classId,
+    required String title,
+  }) async {
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath),
+      'classId': classId.toString(),
+      'title': title,
+    });
+    final result = await _dio.post(Endpoints.teacherMaterialsFile, data: formData);
+    final data = result.data;
+    if (data is Map<String, dynamic> && data['id'] != null) {
+      return MaterialResponse.fromJson(data);
+    }
+    return null;
   }
 
   Future<void> upsertGrade(UpsertGradeParams params) async {

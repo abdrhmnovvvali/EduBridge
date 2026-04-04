@@ -34,4 +34,5 @@ class Endpoints {
   static String teacherTaskSubmissions(int id) => '$_baseUrl/teacher/tasks/$id/submissions';
   static String teacherTaskFeedback(int id) => '$_baseUrl/teacher/tasks/submissions/$id/feedback';
   static const teacherMaterialsLink = '$_baseUrl/teacher/materials/link';
+  static const teacherMaterialsFile = '$_baseUrl/teacher/materials/file';
 }

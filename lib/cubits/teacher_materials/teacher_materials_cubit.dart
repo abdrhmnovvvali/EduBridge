@@ -17,6 +17,14 @@ class TeacherMaterialsCubit extends Cubit<TeacherMaterialsState> {
   final InternetCheckerService _internetCheckerService;
   final TeacherDataContract _contract;
 
+  static String? _apiMessage(dynamic data) {
+    if (data is! Map) return null;
+    final msg = data['message'];
+    if (msg is String) return msg;
+    if (msg is List) return msg.map((e) => e.toString()).join(', ');
+    return null;
+  }
+
   Future<void> linkMaterial(LinkMaterialParams params) async {
     try {
       emit(TeacherMaterialsLinking());
@@ -26,10 +34,34 @@ class TeacherMaterialsCubit extends Cubit<TeacherMaterialsState> {
         return;
       }
       await _contract.linkMaterial(params);
-      emit( TeacherMaterialsSuccess());
+      emit(TeacherMaterialsSuccess());
     } on DioException catch (e, s) {
       await Sentry.captureException(e, stackTrace: s);
-      emit(TeacherMaterialsError(failure: GlobalFailure(e.response?.data['message'] ?? 'Error')));
+      emit(TeacherMaterialsError(failure: GlobalFailure(_apiMessage(e.response?.data) ?? 'Error')));
+    } catch (e, s) {
+      log.error('$e $s');
+      await Sentry.captureException(e, stackTrace: s);
+      emit(const TeacherMaterialsError(failure: GlobalFailure.server()));
+    }
+  }
+
+  Future<void> uploadMaterialFile({
+    required String filePath,
+    required int classId,
+    required String title,
+  }) async {
+    try {
+      emit(TeacherMaterialsLinking());
+      final hasInternet = await _internetCheckerService.hasInternetConnection();
+      if (!hasInternet) {
+        emit(const TeacherMaterialsError(failure: GlobalFailure.network()));
+        return;
+      }
+      await _contract.uploadMaterialFile(filePath: filePath, classId: classId, title: title);
+      emit(TeacherMaterialsSuccess());
+    } on DioException catch (e, s) {
+      await Sentry.captureException(e, stackTrace: s);
+      emit(TeacherMaterialsError(failure: GlobalFailure(_apiMessage(e.response?.data) ?? 'Error')));
     } catch (e, s) {
       log.error('$e $s');
       await Sentry.captureException(e, stackTrace: s);

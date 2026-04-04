@@ -21,6 +21,11 @@ abstract class TeacherDataContract {
   Future<List<TeacherTaskSubmissionResponse>> getTaskSubmissions(int taskId);
   Future<void> submitTaskFeedback(int submissionId, SubmitTaskFeedbackParams params);
   Future<MaterialResponse> linkMaterial(LinkMaterialParams params);
+  Future<MaterialResponse?> uploadMaterialFile({
+    required String filePath,
+    required int classId,
+    required String title,
+  });
   Future<void> upsertGrade(UpsertGradeParams params);
   Future<TeacherSessionResponse> createSession(CreateSessionParams params);
   Future<void> markAttendance(int sessionId, MarkAttendanceParams params);

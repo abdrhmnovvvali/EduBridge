@@ -50,6 +50,14 @@ class TeacherDataRepository implements TeacherDataContract {
   Future<MaterialResponse> linkMaterial(LinkMaterialParams params) => _dataSource.linkMaterial(params);
 
   @override
+  Future<MaterialResponse?> uploadMaterialFile({
+    required String filePath,
+    required int classId,
+    required String title,
+  }) =>
+      _dataSource.uploadMaterialFile(filePath: filePath, classId: classId, title: title);
+
+  @override
   Future<void> upsertGrade(UpsertGradeParams params) => _dataSource.upsertGrade(params);
 
   @override
