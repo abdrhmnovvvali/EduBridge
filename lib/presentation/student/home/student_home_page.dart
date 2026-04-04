@@ -45,7 +45,7 @@ class StudentHomePage extends StatelessWidget {
         displacement: 48,
         onRefresh: () => _onRefresh(context),
         child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          physics: const ClampingScrollPhysics(),
           slivers: [
           SliverToBoxAdapter(
             child: SizedBox(
