@@ -163,7 +163,7 @@ class StudentHomePage extends StatelessWidget {
                                 top: 31.h,
                                 asset: AppAssets.stundent,
                                 value:
-                                    "${studentProfile.attendancePercentage.toStringAsFixed(2)}%",
+                                    "${studentProfile.attendancePercentage.toStringAsFixed(0)}%",
                                 label: "Attendance",
                               ),
                               CustomCard(
