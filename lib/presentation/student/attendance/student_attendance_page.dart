@@ -130,7 +130,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                         },
                         absentDates: absentDates,
                       ),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 30.h),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: _LegendChip(
