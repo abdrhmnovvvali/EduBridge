@@ -20,7 +20,7 @@ class AttendanceCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400.w,
-      height: 360.h,
+      height: 380.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
