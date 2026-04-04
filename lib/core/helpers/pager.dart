@@ -144,10 +144,7 @@ class Pager {
       );
 
   static Widget get studentAttendance => BlocProvider<StudentAttendanceCubit>(
-        create: (_) {
-          final now = DateTime.now();
-          return locator<StudentAttendanceCubit>()..load(month: now.month, year: now.year);
-        },
+        create: (_) => locator<StudentAttendanceCubit>()..load(),
         child: const StudentAttendancePage(),
       );
 

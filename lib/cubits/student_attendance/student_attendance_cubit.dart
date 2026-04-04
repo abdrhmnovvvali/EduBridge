@@ -29,7 +29,9 @@ class StudentAttendanceCubit extends Cubit<StudentAttendanceState> {
       emit(StudentAttendanceSuccess(response.items, absentCount: response.absentCount));
     } on DioException catch (e, s) {
       await Sentry.captureException(e, stackTrace: s);
-      emit(StudentAttendanceError(failure: GlobalFailure(e.response?.data['message'] ?? 'Error')));
+      final msg = e.response?.data['message'];
+      final msgStr = msg is List ? msg.join(' ') : (msg?.toString() ?? 'Error');
+      emit(StudentAttendanceError(failure: GlobalFailure(msgStr)));
     } catch (e, s) {
       log.error('$e $s');
       await Sentry.captureException(e, stackTrace: s);

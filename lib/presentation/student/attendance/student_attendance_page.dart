@@ -56,6 +56,12 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
         .length;
   }
 
+  int _absentCountInMonth(List<AttendanceResponse> items, DateTime month) {
+    return _absentDates(items)
+        .where((d) => d.year == month.year && d.month == month.month)
+        .length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,15 +149,13 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                   final absentDates = _absentDates(state.items);
                   final presentDates = _presentDates(state.items);
                   final presentCount = _presentCountInMonth(state.items, _focusedMonth);
+                  final absentMonthCount = _absentCountInMonth(state.items, _focusedMonth);
 
                   return Column(
                     children: [
                       AttendanceCalendar(
                         focusedMonth: _focusedMonth,
-                        onMonthChanged: (d) {
-                          setState(() => _focusedMonth = d);
-                          context.read<StudentAttendanceCubit>().load(month: d.month, year: d.year);
-                        },
+                        onMonthChanged: (d) => setState(() => _focusedMonth = d),
                         absentDates: absentDates,
                         presentDates: presentDates,
                       ),
@@ -163,7 +167,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                             Expanded(
                               child: _LegendChip(
                                 label: 'Absent',
-                                count: state.absentCount,
+                                count: absentMonthCount,
                                 color: AppColors.red500,
                               ),
                             ),
