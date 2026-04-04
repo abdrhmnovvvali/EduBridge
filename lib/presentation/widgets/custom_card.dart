@@ -27,7 +27,7 @@ final String asset;
           children: [
             Image.asset(asset),
             SizedBox(height: 14.h),
-            Text(value??"", style: TextStyle(fontSize: 40.sp, fontWeight: FontWeight.bold)),
+            Text(value??"", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)),
             Text(label??"", style: TextStyle(fontSize: 16.sp, color: AppColors.black500)),
           ],
         ),

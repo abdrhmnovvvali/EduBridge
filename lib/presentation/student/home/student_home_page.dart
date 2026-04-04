@@ -171,7 +171,7 @@ class StudentHomePage extends StatelessWidget {
                                 top: 31.h,
                                 asset: AppAssets.fee,
                                 value:
-                                    "₹${studentProfile.totalMonthlyFee.toStringAsFixed(0)}",
+                                    "${studentProfile.totalMonthlyFee.toStringAsFixed(0)}₼",
                                 label: "Fees Due",
                               ),
                             ],
