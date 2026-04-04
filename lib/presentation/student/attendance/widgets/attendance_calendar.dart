@@ -10,11 +10,13 @@ class AttendanceCalendar extends StatelessWidget {
     required this.focusedMonth,
     required this.onMonthChanged,
     required this.absentDates,
+    required this.presentDates,
   });
 
   final DateTime focusedMonth;
   final ValueChanged<DateTime> onMonthChanged;
   final Set<DateTime> absentDates;
+  final Set<DateTime> presentDates;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +90,7 @@ class AttendanceCalendar extends StatelessWidget {
               markerBuilder: (context, date, events) {
                 final d = DateTime(date.year, date.month, date.day);
                 final isAbsent = absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+                final isPresent = presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
                 if (isAbsent) {
                   return Positioned(
                     bottom: 2,
@@ -98,6 +101,16 @@ class AttendanceCalendar extends StatelessWidget {
                     ),
                   );
                 }
+                if (isPresent) {
+                  return Positioned(
+                    bottom: 2,
+                    child: Container(
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(color: AppColors.secondary700, shape: BoxShape.circle),
+                    ),
+                  );
+                }
                 return null;
               },
               defaultBuilder: (context, date, focusedDay) {
@@ -105,12 +118,17 @@ class AttendanceCalendar extends StatelessWidget {
                 final isOutside = date.month != focusedMonth.month;
                 final isAbsent = !isOutside &&
                     absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+                final isPresent = !isOutside &&
+                    presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
                 Color? bgColor;
                 if (isAbsent) {
                   bgColor = AppColors.red500;
+                } else if (isPresent) {
+                  bgColor = AppColors.secondary700;
                 } else if (!isOutside && date.weekday == DateTime.sunday) {
                   bgColor = AppColors.graySoft25.withOpacity(0.25);
                 }
+                final coloredDay = isAbsent || isPresent;
                 return Container(
                   margin: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
@@ -124,8 +142,8 @@ class AttendanceCalendar extends StatelessWidget {
                       fontSize: 13.sp,
                       color: isOutside
                           ? AppColors.black300
-                          : (bgColor == AppColors.red500 ? Colors.white : AppColors.black900),
-                      fontWeight: isAbsent ? FontWeight.w600 : FontWeight.normal,
+                          : (coloredDay ? Colors.white : AppColors.black900),
+                      fontWeight: coloredDay ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
                 );

@@ -34,6 +34,28 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
         .toSet();
   }
 
+  Set<DateTime> _presentDates(List<AttendanceResponse> items) {
+    return items
+        .where((e) {
+          final s = e.status.toUpperCase();
+          return (s == 'PRESENT' || s == 'LATE') && e.sessionDate != null;
+        })
+        .map(
+          (e) => DateTime(
+            e.sessionDate!.year,
+            e.sessionDate!.month,
+            e.sessionDate!.day,
+          ),
+        )
+        .toSet();
+  }
+
+  int _presentCountInMonth(List<AttendanceResponse> items, DateTime month) {
+    return _presentDates(items)
+        .where((d) => d.year == month.year && d.month == month.month)
+        .length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,6 +141,8 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                 }
                 if (state is StudentAttendanceSuccess) {
                   final absentDates = _absentDates(state.items);
+                  final presentDates = _presentDates(state.items);
+                  final presentCount = _presentCountInMonth(state.items, _focusedMonth);
 
                   return Column(
                     children: [
@@ -129,14 +153,29 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                           context.read<StudentAttendanceCubit>().load(month: d.month, year: d.year);
                         },
                         absentDates: absentDates,
+                        presentDates: presentDates,
                       ),
                       SizedBox(height: 30.h),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: _LegendChip(
-                          label: 'Absent',
-                          count: state.absentCount,
-                          color: AppColors.red500,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _LegendChip(
+                                label: 'Absent',
+                                count: state.absentCount,
+                                color: AppColors.red500,
+                              ),
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: _LegendChip(
+                                label: 'Present',
+                                count: presentCount,
+                                color: AppColors.secondary700,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
 // Spacer(),
