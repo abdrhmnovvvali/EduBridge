@@ -13,7 +13,7 @@ class LoginDataSource {
   }
      Future<SessionResponse> studentLogin(LoginParams params) async {
     final dio = authClient;
-    const endpoint = Endpoints.student;
+    const endpoint = Endpoints.studentLogin;
     final body = params.toJson();
     final result = await dio.post(endpoint, data: body);
     return SessionResponse.fromJson(result.data);

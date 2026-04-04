@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eduroom/core/constants/app_assets.dart';
 import 'package:eduroom/core/constants/app_colors.dart';
 import 'package:eduroom/core/extensions/url_parser_extension.dart';
+import 'package:eduroom/core/router/app_routers.dart';
 import 'package:eduroom/presentation/student/home/widgets/student_text_skeleton.dart';
 import 'package:eduroom/presentation/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../cubits/teacher_profile/teacher_profile_cubit.dart';
 
@@ -99,48 +101,56 @@ class TeacherHomePage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8.h),
                                   Text(
-                                    teacherProfile.course!.courseName,
+                                    teacherProfile.course?.courseName ?? '—',
                                     style: TextStyle(
                                       color: Colors.white70,
                                       fontSize: 14.sp,
                                     ),
                                   ),
-                                  SizedBox(height: 12.h),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 12.w,
-                                      vertical: 6.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20.r),
-                                    ),
-                                    child: Text(
-                                      "${teacherProfile.course!.startDate.month.toString().padLeft(2, '0')}.${teacherProfile.course!.startDate.year}-"
-                                      "${teacherProfile.course!.endDate.month.toString().padLeft(2, '0')}.${teacherProfile.course!.endDate.year} ",
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 12.sp,
+                                  if (teacherProfile.course != null) ...[
+                                    SizedBox(height: 12.h),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                        vertical: 6.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20.r),
+                                      ),
+                                      child: Text(
+                                        "${teacherProfile.course!.startDate.month.toString().padLeft(2, '0')}.${teacherProfile.course!.startDate.year}-"
+                                        "${teacherProfile.course!.endDate.month.toString().padLeft(2, '0')}.${teacherProfile.course!.endDate.year}",
+                                        style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 12.sp,
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ],
                               ),
-                              CircleAvatar(
-                                radius: 30.r,
-                                backgroundColor: Colors.grey[300],
-                                backgroundImage:
-                                    teacherProfile.photoUrl != null &&
-                                        teacherProfile.photoUrl!.isNotEmpty
-                                    ? CachedNetworkImageProvider(
-                                        teacherProfile.photoUrl!.toParsedUrl(),
-                                      )
-                                    : null,
-                                child:
-                                    teacherProfile.photoUrl == null ||
-                                        teacherProfile.photoUrl!.isEmpty
-                                    ? Icon(Icons.person, size: 30.r)
-                                    : null,
+                              GestureDetector(
+                                onTap: () => context.push(
+                                  AppRoutes.teacherProfile,
+                                  extra: teacherProfile,
+                                ),
+                                child: CircleAvatar(
+                                  radius: 30.r,
+                                  backgroundColor: Colors.grey[300],
+                                  backgroundImage:
+                                      teacherProfile.photoUrl != null &&
+                                          teacherProfile.photoUrl!.isNotEmpty
+                                      ? CachedNetworkImageProvider(
+                                          teacherProfile.photoUrl!.toParsedUrl(),
+                                        )
+                                      : null,
+                                  child:
+                                      teacherProfile.photoUrl == null ||
+                                          teacherProfile.photoUrl!.isEmpty
+                                      ? Icon(Icons.person, size: 30.r)
+                                      : null,
+                                ),
                               ),
                             ],
                           ),
@@ -193,19 +203,34 @@ class TeacherHomePage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             sliver: SliverGrid(
               delegate: SliverChildBuilderDelegate((context, index) {
-                return Container(
-                  height: 132.h,
-                  width: 163.w,
-                  decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(15.r),
-                  ),
-                  child: CustomCard(
-                    asset: AppAssets.fee,
-                    color: AppColors.graySoft50,
+                final items = [
+                  (label: 'Classes', icon: Icons.class_, route: AppRoutes.teacherClasses),
+                  (label: 'Tasks', icon: Icons.assignment, route: AppRoutes.teacherTasks),
+                  (label: 'Materials', icon: Icons.folder_open, route: AppRoutes.teacherMaterials),
+                  (label: 'Grades', icon: Icons.grade, route: AppRoutes.teacherGrades),
+                  (label: 'Attendance', icon: Icons.event_available, route: AppRoutes.teacherClasses),
+                ];
+                final item = items[index];
+                return GestureDetector(
+                  onTap: () => context.push(item.route),
+                  child: Container(
+                    height: 132.h,
+                    width: 163.w,
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(item.icon, size: 40.r, color: AppColors.bgColor),
+                        SizedBox(height: 8.h),
+                        Text(item.label, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
                   ),
                 );
-              }, childCount: 6),
+              }, childCount: 5),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 15.h,

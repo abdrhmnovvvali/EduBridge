@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_dio_interceptor/awesome_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 
@@ -29,3 +31,7 @@ class AuthClient {
 }
 
 Dio get authClient => AuthClient.instance.dio;
+
+
+
+

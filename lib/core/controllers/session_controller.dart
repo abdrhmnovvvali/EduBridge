@@ -37,16 +37,9 @@ class SessionController {
       _sessionHiveDataSource.saveData(response);
 
   static Future<void> logout({bool pleaseLoginAlert = false}) async {
-    //reset singleten dio
     DioClient.instance.reset();
     await _sessionHiveDataSource.clearData();
     PaintingBinding.instance.imageCache.clear();
     PaintingBinding.instance.imageCache.clearLiveImages();
-
-    // navigate to login page
-    if (!AppGlobalKeys().context.mounted) return;
-    // AppGlobalKeys().context.go(AppRoutes.login);
-
-    // if (pleaseLoginAlert) Alerts.showLogoutInfo();
   }
 }

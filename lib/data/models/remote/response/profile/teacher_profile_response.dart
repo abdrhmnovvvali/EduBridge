@@ -108,10 +108,10 @@ class TeacherClass extends BaseModel {
 
   factory TeacherClass.fromJson(Map<String, dynamic> json) => TeacherClass(
     id: json["id"],
-    name: json["name"],
-    number: json["number"],
-    specialization: json["specialization"],
-    courseName: json["courseName"],
+    name: json["name"] ?? "",
+    number: json["number"] ?? "",
+    specialization: json["specialization"] ?? "",
+    courseName: json["courseName"] ?? json["course_name"] ?? "",
   );
 
   @override
