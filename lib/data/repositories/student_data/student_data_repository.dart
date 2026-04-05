@@ -17,6 +17,10 @@ class StudentDataRepository implements StudentDataContract {
   Future<List<TaskResponse>> getTasks() => _dataSource.getTasks();
 
   @override
+  Future<void> submitTask(int taskId, {String? comment, String? filePath}) =>
+      _dataSource.submitTask(taskId, comment: comment, filePath: filePath);
+
+  @override
   Future<List<MaterialResponse>> getMaterials() => _dataSource.getMaterials();
 
   @override

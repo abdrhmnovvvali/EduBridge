@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:eduroom/core/constants/endpoints.dart';
 import 'package:eduroom/core/network/dio/dio_client.dart';
 import 'package:eduroom/data/models/remote/response/student/attendance_list_response.dart';
@@ -16,6 +17,20 @@ class StudentDataSource {
     final result = await _dio.get(Endpoints.studentTasks);
     final list = result.data is List ? result.data as List : [];
     return list.map((e) => TaskResponse.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> submitTask(int taskId, {String? comment, String? filePath}) async {
+    final map = <String, dynamic>{};
+    if (comment != null && comment.isNotEmpty) {
+      map['comment'] = comment;
+    }
+    if (filePath != null && filePath.isNotEmpty) {
+      map['file'] = await MultipartFile.fromFile(filePath);
+    }
+    if (map.isEmpty) {
+      throw ArgumentError('comment or file required');
+    }
+    await _dio.post(Endpoints.studentTaskSubmit(taskId), data: FormData.fromMap(map));
   }
 
   Future<List<MaterialResponse>> getMaterials() async {

@@ -5,13 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class TaskCard extends StatelessWidget {
-  const TaskCard({super.key, required this.task});
+  const TaskCard({super.key, required this.task, this.onTap});
 
   final TaskResponse task;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final card = Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -22,7 +23,15 @@ class TaskCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(task.title, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+          Row(
+            children: [
+              Expanded(
+                child: Text(task.title, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+              ),
+              if (onTap != null)
+                Icon(Icons.chevron_right, color: AppColors.graySoft25, size: 22.r),
+            ],
+          ),
           if (task.description != null && task.description!.isNotEmpty)
             Padding(
               padding: EdgeInsets.only(top: 8.h),
@@ -39,6 +48,17 @@ class TaskCard extends StatelessWidget {
               child: Text(task.className!, style: TextStyle(fontSize: 12.sp, color: AppColors.graySoft25)),
             ),
         ],
+      ),
+    );
+
+    if (onTap == null) return card;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.r),
+        child: card,
       ),
     );
   }

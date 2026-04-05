@@ -6,7 +6,7 @@ import 'package:eduroom/data/contracts/teacher_data/teacher_data_contract.dart';
 import 'package:eduroom/data/models/remote/request/teacher/create_task_params.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_class_response.dart';
 import 'package:equatable/equatable.dart';
-import 'package:file_selector/file_selector.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -48,23 +48,27 @@ class TeacherCreateTaskCubit extends Cubit<TeacherCreateTaskState> {
     emit(state.copyWith(dueDate: value, clearFailure: true));
   }
 
+  /// file_selector_ios bəzən Pigeon kanalı ilə iOS-da "channel-error" verir; mobil üçün file_picker stabil işləyir.
+  static const _materialExtensions = <String>[
+    'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'rtf',
+    'zip', 'rar', '7z',
+    'jpg', 'jpeg', 'png', 'gif', 'webp',
+    'mp4', 'mov',
+  ];
+
   Future<void> pickFile() async {
-    const materials = XTypeGroup(
-      label: 'Materials',
-      extensions: <String>[
-        'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'rtf',
-        'zip', 'rar', '7z',
-        'jpg', 'jpeg', 'png', 'gif', 'webp',
-        'mp4', 'mov',
-      ],
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: _materialExtensions,
+      allowMultiple: false,
     );
-    final file = await openFile(acceptedTypeGroups: const [materials]);
-    if (file == null) return;
-    final path = file.path;
-    if (path.isEmpty) return;
+    if (result == null || result.files.isEmpty) return;
+    final picked = result.files.single;
+    final path = picked.path;
+    if (path == null || path.isEmpty) return;
     emit(state.copyWith(
       pickedFilePath: path,
-      pickedFileName: file.name,
+      pickedFileName: picked.name,
       clearFailure: true,
     ));
   }

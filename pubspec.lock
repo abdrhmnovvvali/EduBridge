@@ -289,30 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
-  file_selector:
+  file_picker:
     dependency: "direct main"
     description:
-      name: file_selector
-      sha256: bd15e43e9268db636b53eeaca9f56324d1622af30e5c34d6e267649758c84d9a
+      name: file_picker
+      sha256: ab13ae8ef5580a411c458d6207b6774a6c237d77ac37011b13994879f68a8810
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
-  file_selector_android:
-    dependency: transitive
-    description:
-      name: file_selector_android
-      sha256: bf7ab65776d7e176280c853679e7742668586ba1663f7f1561e897fadad6c3ba
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.2+5"
-  file_selector_ios:
-    dependency: transitive
-    description:
-      name: file_selector_ios
-      sha256: e2ecf2885c121691ce13b60db3508f53c01f869fb6e8dc5c1cfa771e4c46aeca
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.3+5"
+    version: "8.3.7"
   file_selector_linux:
     dependency: transitive
     description:
@@ -337,14 +321,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.7.0"
-  file_selector_web:
-    dependency: transitive
-    description:
-      name: file_selector_web
-      sha256: c4c0ea4224d97a60a7067eca0c8fd419e708ff830e0c83b11a48faf566cec3e7
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.4+2"
   file_selector_windows:
     dependency: transitive
     description:
@@ -1269,14 +1245,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  simple_barcode_scanner:
-    dependency: "direct main"
-    description:
-      name: simple_barcode_scanner
-      sha256: "2b6ec05e10fbf4f07687f3687c5cf46d3dcf873492e0a5758211bd957c854113"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   simple_gesture_detector:
     dependency: transitive
     description:
@@ -1642,14 +1610,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  webview_windows:
-    dependency: transitive
-    description:
-      name: webview_windows
-      sha256: "47fcad5875a45db29dbb5c9e6709bf5c88dcc429049872701343f91ed7255730"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.0"
   win32:
     dependency: transitive
     description:

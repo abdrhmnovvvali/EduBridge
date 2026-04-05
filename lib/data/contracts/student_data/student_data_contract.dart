@@ -8,6 +8,7 @@ import 'package:eduroom/data/models/remote/response/student/task_response.dart';
 
 abstract class StudentDataContract {
   Future<List<TaskResponse>> getTasks();
+  Future<void> submitTask(int taskId, {String? comment, String? filePath});
   Future<List<MaterialResponse>> getMaterials();
   Future<AttendanceListResponse> getAttendance({int? month, int? year});
   Future<List<GradeResponse>> getGrades();

@@ -31,6 +31,7 @@ class AppRoutes {
   static const String studentNotifications = '/studentNotifications';
   static const String studentLeaderboard = '/studentLeaderboard';
   static const String studentProfile = '/studentProfile';
+  static const String studentTaskSubmit = '/studentTaskSubmit';
 
   static const String teacherClasses = '/teacherClasses';
   static const String teacherClassDetail = '/teacherClassDetail';
@@ -99,6 +100,17 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.studentTasks,
       name: 'studentTasks',
       builder: (_, __) => Pager.studentTasks,
+    ),
+    GoRoute(
+      path: AppRoutes.studentTaskSubmit,
+      name: 'studentTaskSubmit',
+      builder: (context, state) {
+        final task = state.extra as TaskResponse?;
+        if (task == null) {
+          return const Scaffold(body: Center(child: Text('Task not found')));
+        }
+        return Pager.studentTaskSubmit(task);
+      },
     ),
     GoRoute(
       path: AppRoutes.studentMaterials,

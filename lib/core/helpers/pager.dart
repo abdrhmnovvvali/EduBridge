@@ -7,6 +7,7 @@ import 'package:eduroom/cubits/student_leaderboard/student_leaderboard_cubit.dar
 import 'package:eduroom/cubits/student_materials/student_materials_cubit.dart';
 import 'package:eduroom/cubits/student_notifications/student_notifications_cubit.dart';
 import 'package:eduroom/cubits/student_profile/student_profile_cubit.dart';
+import 'package:eduroom/cubits/student_task_submit/student_task_submit_cubit.dart';
 import 'package:eduroom/cubits/student_tasks/student_tasks_cubit.dart';
 import 'package:eduroom/cubits/splash/splash_cubit.dart';
 import 'package:eduroom/cubits/teacher_attendance/teacher_attendance_cubit.dart';
@@ -22,6 +23,7 @@ import 'package:eduroom/cubits/teacher_class_students/teacher_class_students_cub
 import 'package:eduroom/cubits/teacher_class_sessions/teacher_class_sessions_cubit.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
 import 'package:eduroom/core/services/internet_checker_service.dart';
+import 'package:eduroom/data/contracts/student_data/student_data_contract.dart';
 import 'package:eduroom/data/contracts/teacher_data/teacher_data_contract.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_class_response.dart';
 import 'package:eduroom/data/models/remote/response/teacher/teacher_session_response.dart';
@@ -34,6 +36,7 @@ import 'package:eduroom/presentation/student/invoices/student_invoices_page.dart
 import 'package:eduroom/presentation/student/leaderboard/student_leaderboard_page.dart';
 import 'package:eduroom/presentation/student/materials/student_materials_page.dart';
 import 'package:eduroom/presentation/student/notifications/student_notifications_page.dart';
+import 'package:eduroom/presentation/student/task_submit/student_task_submit_page.dart';
 import 'package:eduroom/presentation/student/tasks/student_tasks_page.dart';
 import 'package:eduroom/presentation/teacher/class_detail/teacher_class_detail_page.dart';
 import 'package:eduroom/presentation/teacher/classes/teacher_classes_page.dart';
@@ -146,6 +149,15 @@ class Pager {
   static Widget get studentTasks => BlocProvider<StudentTasksCubit>(
         create: (_) => locator()..load(),
         child: const StudentTasksPage(),
+      );
+
+  static Widget studentTaskSubmit(TaskResponse task) => BlocProvider<StudentTaskSubmitCubit>(
+        create: (_) => StudentTaskSubmitCubit(
+          locator.get<InternetCheckerService>(),
+          locator.get<StudentDataContract>(),
+          task: task,
+        ),
+        child: StudentTaskSubmitPage(task: task),
       );
 
   static Widget get studentMaterials => BlocProvider<StudentMaterialsCubit>(
