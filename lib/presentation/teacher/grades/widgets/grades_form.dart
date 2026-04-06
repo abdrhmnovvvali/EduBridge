@@ -203,11 +203,12 @@ class _GradesFormState extends State<GradesForm> {
                     firstDate: DateTime(2020),
                     lastDate: DateTime.now(),
                   );
-                  if (d != null)
+                  if (d != null) {
                     setState(
                       () => _dateKey =
                           '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}',
                     );
+                  }
                 },
               ),
               SizedBox(height: 16.h),

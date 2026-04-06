@@ -35,7 +35,10 @@ class StudentTasksPage extends StatelessWidget {
             final tasks = state.tasks;
             if (tasks.isEmpty) {
               return Center(
-                child: Text('No tasks yet', style: TextStyle(fontSize: 16.sp, color: AppColors.black500)),
+                child: Text(
+                  'No tasks yet',
+                  style: TextStyle(fontSize: 16.sp, color: AppColors.black500),
+                ),
               );
             }
             return ListView.builder(

@@ -9,10 +9,11 @@ sealed class StudentInvoicesState extends Equatable {
 final class StudentInvoicesInitial extends StudentInvoicesState {}
 final class StudentInvoicesLoading extends StudentInvoicesState {}
 final class StudentInvoicesSuccess extends StudentInvoicesState {
-  const StudentInvoicesSuccess(this.invoices);
+  const StudentInvoicesSuccess(this.invoices, {this.summary});
   final List<InvoiceResponse> invoices;
+  final InvoiceSummaryResponse? summary;
   @override
-  List<Object?> get props => [invoices];
+  List<Object?> get props => [invoices, summary];
 }
 final class StudentInvoicesError extends StudentInvoicesState {
   const StudentInvoicesError({required this.failure});

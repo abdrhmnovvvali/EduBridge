@@ -38,10 +38,20 @@ class TaskCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(task.title, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+                child: Text(
+                  task.title,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
               if (onTap != null)
-                Icon(Icons.chevron_right, color: AppColors.graySoft25, size: 22.r),
+                Icon(
+                  Icons.chevron_right,
+                  color: AppColors.graySoft25,
+                  size: 22.r,
+                ),
             ],
           ),
           if (contextLine.isNotEmpty)
@@ -49,18 +59,30 @@ class TaskCard extends StatelessWidget {
               padding: EdgeInsets.only(top: 6.h),
               child: Text(
                 contextLine,
-                style: TextStyle(fontSize: 12.sp, color: AppColors.black300, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColors.black300,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           if (task.description != null && task.description!.isNotEmpty)
             Padding(
               padding: EdgeInsets.only(top: 8.h),
-              child: Text(task.description!, style: TextStyle(fontSize: 14.sp, color: AppColors.black500), maxLines: 2, overflow: TextOverflow.ellipsis),
+              child: Text(
+                task.description!,
+                style: TextStyle(fontSize: 14.sp, color: AppColors.black500),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           if (task.dueAt != null)
             Padding(
               padding: EdgeInsets.only(top: 8.h),
-              child: Text('Due: ${DateFormat('MMM d, y').format(task.dueAt!)}', style: TextStyle(fontSize: 12.sp, color: AppColors.black300)),
+              child: Text(
+                'Due: ${DateFormat('MMM d, y').format(task.dueAt!)}',
+                style: TextStyle(fontSize: 12.sp, color: AppColors.black300),
+              ),
             ),
         ],
       ),

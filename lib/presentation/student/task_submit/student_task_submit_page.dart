@@ -17,8 +17,7 @@ class StudentTaskSubmitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<StudentTaskSubmitCubit, StudentTaskSubmitState>(
       listenWhen: (p, c) =>
-          c.status != p.status ||
-          (c.failure != null && c.failure != p.failure),
+          c.status != p.status || (c.failure != null && c.failure != p.failure),
       listener: (context, state) {
         if (state.status == StudentTaskSubmitStatus.success) {
           Snackbars.showSuccess('Submitted');
@@ -46,27 +45,40 @@ class StudentTaskSubmitPage extends StatelessWidget {
               children: [
                 Text(
                   task.title,
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                if (task.description != null && task.description!.isNotEmpty) ...[
+                if (task.description != null &&
+                    task.description!.isNotEmpty) ...[
                   SizedBox(height: 12.h),
                   Text(
                     task.description!,
-                    style: TextStyle(fontSize: 14.sp, color: AppColors.black500),
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: AppColors.black500,
+                    ),
                   ),
                 ],
                 if (task.dueAt != null) ...[
                   SizedBox(height: 8.h),
                   Text(
                     'Due: ${DateFormat('MMM d, y').format(task.dueAt!)}',
-                    style: TextStyle(fontSize: 13.sp, color: AppColors.black300),
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: AppColors.black300,
+                    ),
                   ),
                 ],
                 if (task.className != null) ...[
                   SizedBox(height: 4.h),
                   Text(
                     task.className!,
-                    style: TextStyle(fontSize: 13.sp, color: AppColors.graySoft25),
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: AppColors.graySoft25,
+                    ),
                   ),
                 ],
                 SizedBox(height: 24.h),
@@ -77,7 +89,9 @@ class StudentTaskSubmitPage extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Your answer / notes',
                     alignLabelWithHint: true,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -91,7 +105,9 @@ class StudentTaskSubmitPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton.icon(
-                      onPressed: state.isSubmitting ? null : () => cubit.clearPickedFile(),
+                      onPressed: state.isSubmitting
+                          ? null
+                          : () => cubit.clearPickedFile(),
                       icon: const Icon(Icons.close, size: 18),
                       label: const Text('Remove file'),
                     ),
@@ -104,13 +120,18 @@ class StudentTaskSubmitPage extends StatelessWidget {
                     backgroundColor: AppColors.bgColor,
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
                   ),
                   child: state.isSubmitting
                       ? SizedBox(
                           height: 22,
                           width: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
                         )
                       : const Text('Submit'),
                 ),

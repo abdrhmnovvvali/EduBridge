@@ -24,17 +24,36 @@ class GradeCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(grade.dateKey, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+              Text(
+                grade.dateKey,
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ),
               if (grade.className != null)
-                Text(grade.className!, style: TextStyle(fontSize: 12.sp, color: AppColors.black300)),
+                Text(
+                  grade.className!,
+                  style: TextStyle(fontSize: 12.sp, color: AppColors.black300),
+                ),
               if (grade.note != null && grade.note!.isNotEmpty)
-                Text(grade.note!, style: TextStyle(fontSize: 12.sp, color: AppColors.black500)),
+                Text(
+                  grade.note!,
+                  style: TextStyle(fontSize: 12.sp, color: AppColors.black500),
+                ),
             ],
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            decoration: BoxDecoration(color: AppColors.bgColor, borderRadius: BorderRadius.circular(8.r)),
-            child: Text('${grade.value}', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: Colors.white)),
+            decoration: BoxDecoration(
+              color: AppColors.bgColor,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Text(
+              '${grade.value}',
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),

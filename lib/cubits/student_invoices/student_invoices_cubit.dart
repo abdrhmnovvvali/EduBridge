@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:eduroom/core/helpers/logger.dart';
 import 'package:eduroom/data/contracts/student_data/student_data_contract.dart';
 import 'package:eduroom/data/models/remote/response/student/invoice_response.dart';
+import 'package:eduroom/data/models/remote/response/student/invoice_summary_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -17,6 +18,14 @@ class StudentInvoicesCubit extends Cubit<StudentInvoicesState> {
   final InternetCheckerService _internetCheckerService;
   final StudentDataContract _contract;
 
+  static String? _dioMessage(dynamic data) {
+    if (data is! Map) return null;
+    final msg = data['message'];
+    if (msg is String) return msg;
+    if (msg is List) return msg.map((e) => e.toString()).join(', ');
+    return null;
+  }
+
   Future<void> load() async {
     try {
       emit(StudentInvoicesLoading());
@@ -25,11 +34,12 @@ class StudentInvoicesCubit extends Cubit<StudentInvoicesState> {
         emit(const StudentInvoicesError(failure: GlobalFailure.network()));
         return;
       }
-      final list = await _contract.getInvoices();
-      emit(StudentInvoicesSuccess(list));
+      final res = await _contract.getInvoices();
+      emit(StudentInvoicesSuccess(res.invoices, summary: res.summary));
     } on DioException catch (e, s) {
       await Sentry.captureException(e, stackTrace: s);
-      emit(StudentInvoicesError(failure: GlobalFailure(e.response?.data['message'] ?? 'Error')));
+      final msg = _dioMessage(e.response?.data);
+      emit(StudentInvoicesError(failure: GlobalFailure(msg ?? 'Error')));
     } catch (e, s) {
       log.error('$e $s');
       await Sentry.captureException(e, stackTrace: s);

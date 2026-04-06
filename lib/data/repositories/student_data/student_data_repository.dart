@@ -2,7 +2,7 @@ import 'package:eduroom/data/contracts/student_data/student_data_contract.dart';
 import 'package:eduroom/data/data_source/remote/student/student_data_source.dart';
 import 'package:eduroom/data/models/remote/response/student/attendance_list_response.dart';
 import 'package:eduroom/data/models/remote/response/student/grade_response.dart';
-import 'package:eduroom/data/models/remote/response/student/invoice_response.dart';
+import 'package:eduroom/data/models/remote/response/student/invoices_list_response.dart';
 import 'package:eduroom/data/models/remote/response/student/leaderboard_response.dart';
 import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/notification_response.dart';
@@ -42,7 +42,7 @@ class StudentDataRepository implements StudentDataContract {
   Future<List<GradeResponse>> getGrades() => _dataSource.getGrades();
 
   @override
-  Future<List<InvoiceResponse>> getInvoices() => _dataSource.getInvoices();
+  Future<InvoicesListResponse> getInvoices() => _dataSource.getInvoices();
 
   @override
   Future<List<NotificationResponse>> getNotifications() => _dataSource.getNotifications();

@@ -9,9 +9,9 @@ class LoginParams extends BaseModel {
     required this.password,
   });
 
-  @override
+  @override 
   Map<String, dynamic> toJson() => {
-        'emailOrPhone': emailOrPhone,
+        'email': emailOrPhone,
         'password': password,
       };
 

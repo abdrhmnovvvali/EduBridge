@@ -20,30 +20,38 @@ class StudentTeacherFeedbackPage extends StatelessWidget {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: BlocConsumer<StudentTeacherFeedbackCubit, StudentTeacherFeedbackState>(
-        listenWhen: (prev, curr) =>
-            curr.failure != null && curr.failure != prev.failure,
-        listener: (context, state) {
-          Snackbars.showError(state.failure!.message ?? 'Error');
-        },
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 8.h),
-                child: _ClassFilterDropdown(
-                  enrollments: state.enrollments,
-                  selectedClassId: state.selectedClassId,
-                  onChanged: (id) => context.read<StudentTeacherFeedbackCubit>().setClassFilter(id),
-                ),
-              ),
-              Expanded(
-                child: state.isLoading && state.items.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : state.items.isEmpty
+      body:
+          BlocConsumer<
+            StudentTeacherFeedbackCubit,
+            StudentTeacherFeedbackState
+          >(
+            listenWhen: (prev, curr) =>
+                curr.failure != null && curr.failure != prev.failure,
+            listener: (context, state) {
+              Snackbars.showError(state.failure!.message ?? 'Error');
+            },
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 8.h),
+                    child: _ClassFilterDropdown(
+                      enrollments: state.enrollments,
+                      selectedClassId: state.selectedClassId,
+                      onChanged: (id) => context
+                          .read<StudentTeacherFeedbackCubit>()
+                          .setClassFilter(id),
+                    ),
+                  ),
+                  Expanded(
+                    child: state.isLoading && state.items.isEmpty
+                        ? const Center(child: CircularProgressIndicator())
+                        : state.items.isEmpty
                         ? RefreshIndicator(
-                            onRefresh: () => context.read<StudentTeacherFeedbackCubit>().load(),
+                            onRefresh: () => context
+                                .read<StudentTeacherFeedbackCubit>()
+                                .load(),
                             child: ListView(
                               physics: const AlwaysScrollableScrollPhysics(),
                               children: [
@@ -51,42 +59,63 @@ class StudentTeacherFeedbackPage extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     'No teacher feedback yet',
-                                    style: TextStyle(fontSize: 16.sp, color: AppColors.black500),
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      color: AppColors.black500,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           )
                         : RefreshIndicator(
-                            onRefresh: () => context.read<StudentTeacherFeedbackCubit>().load(),
+                            onRefresh: () => context
+                                .read<StudentTeacherFeedbackCubit>()
+                                .load(),
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (n) {
-                                if (n.metrics.pixels >= n.metrics.maxScrollExtent - 120) {
-                                  context.read<StudentTeacherFeedbackCubit>().loadMore();
+                                if (n.metrics.pixels >=
+                                    n.metrics.maxScrollExtent - 120) {
+                                  context
+                                      .read<StudentTeacherFeedbackCubit>()
+                                      .loadMore();
                                 }
                                 return false;
                               },
                               child: ListView.builder(
                                 physics: const AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 24.h),
-                                itemCount: state.items.length + (state.isLoadingMore ? 1 : 0),
+                                padding: EdgeInsets.fromLTRB(
+                                  20.w,
+                                  0,
+                                  20.w,
+                                  24.h,
+                                ),
+                                itemCount:
+                                    state.items.length +
+                                    (state.isLoadingMore ? 1 : 0),
                                 itemBuilder: (context, i) {
                                   if (i >= state.items.length) {
                                     return Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                                      child: const Center(child: CircularProgressIndicator()),
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 16.h,
+                                      ),
+                                      child: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
                                     );
                                   }
-                                  return TeacherFeedbackCard(item: state.items[i]);
+                                  return TeacherFeedbackCard(
+                                    item: state.items[i],
+                                  );
                                 },
                               ),
                             ),
                           ),
-              ),
-            ],
-          );
-        },
-      ),
+                  ),
+                ],
+              );
+            },
+          ),
     );
   }
 }
@@ -115,9 +144,15 @@ class _ClassFilterDropdown extends StatelessWidget {
           isExpanded: true,
           value: selectedClassId,
           items: [
-            const DropdownMenuItem<int?>(value: null, child: Text('All classes')),
+            const DropdownMenuItem<int?>(
+              value: null,
+              child: Text('All classes'),
+            ),
             ...enrollments.map(
-              (e) => DropdownMenuItem<int?>(value: e.classId, child: Text(e.className)),
+              (e) => DropdownMenuItem<int?>(
+                value: e.classId,
+                child: Text(e.className),
+              ),
             ),
           ],
           onChanged: onChanged,

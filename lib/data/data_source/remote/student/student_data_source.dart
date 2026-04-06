@@ -4,7 +4,7 @@ import 'package:eduroom/core/network/dio/dio_client.dart';
 import 'package:eduroom/data/models/remote/response/student/attendance_list_response.dart';
 import 'package:eduroom/data/models/remote/response/student/attendance_response.dart';
 import 'package:eduroom/data/models/remote/response/student/grade_response.dart';
-import 'package:eduroom/data/models/remote/response/student/invoice_response.dart';
+import 'package:eduroom/data/models/remote/response/student/invoices_list_response.dart';
 import 'package:eduroom/data/models/remote/response/student/leaderboard_response.dart';
 import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/notification_response.dart';
@@ -156,10 +156,9 @@ class StudentDataSource {
     return list.map((e) => GradeResponse.fromJson(e as Map<String, dynamic>)).toList();
   }
 
-  Future<List<InvoiceResponse>> getInvoices() async {
+  Future<InvoicesListResponse> getInvoices() async {
     final result = await _dio.get(Endpoints.studentInvoices);
-    final list = result.data is List ? result.data as List : [];
-    return list.map((e) => InvoiceResponse.fromJson(e as Map<String, dynamic>)).toList();
+    return InvoicesListResponse.fromResponseBody(result.data);
   }
 
   Future<List<NotificationResponse>> getNotifications() async {

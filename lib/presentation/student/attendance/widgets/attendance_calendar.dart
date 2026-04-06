@@ -20,10 +20,16 @@ class AttendanceCalendar extends StatelessWidget {
 
   Widget _dayCell(DateTime date, {required bool isOutside}) {
     final d = DateTime(date.year, date.month, date.day);
-    final isAbsent = !isOutside &&
-        absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
-    final isPresent = !isOutside &&
-        presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+    final isAbsent =
+        !isOutside &&
+        absentDates.any(
+          (x) => x.year == d.year && x.month == d.month && x.day == d.day,
+        );
+    final isPresent =
+        !isOutside &&
+        presentDates.any(
+          (x) => x.year == d.year && x.month == d.month && x.day == d.day,
+        );
     Color? bgColor;
     // Əvvəlcə iştirak — eyni gündə zidd qeyd olsa belə yaşıl görünsün.
     if (isPresent) {
@@ -36,10 +42,7 @@ class AttendanceCalendar extends StatelessWidget {
     final coloredDay = isAbsent || isPresent;
     return Container(
       margin: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: bgColor,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
       alignment: Alignment.center,
       child: Text(
         '${date.day}',
@@ -77,17 +80,25 @@ class AttendanceCalendar extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left),
-                onPressed: () => onMonthChanged(DateTime(focusedMonth.year, focusedMonth.month - 1)),
+                onPressed: () => onMonthChanged(
+                  DateTime(focusedMonth.year, focusedMonth.month - 1),
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
               Text(
                 DateFormat('MMMM yyyy').format(focusedMonth).toUpperCase(),
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.black900),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.black900,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right),
-                onPressed: () => onMonthChanged(DateTime(focusedMonth.year, focusedMonth.month + 1)),
+                onPressed: () => onMonthChanged(
+                  DateTime(focusedMonth.year, focusedMonth.month + 1),
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -104,31 +115,55 @@ class AttendanceCalendar extends StatelessWidget {
             onPageChanged: onMonthChanged,
             calendarStyle: CalendarStyle(
               outsideDaysVisible: true,
-              outsideTextStyle: TextStyle(fontSize: 12.sp, color: AppColors.black300),
-              defaultTextStyle: TextStyle(fontSize: 13.sp, color: AppColors.black900),
-              weekendTextStyle: TextStyle(fontSize: 13.sp, color: AppColors.graySoft25),
+              outsideTextStyle: TextStyle(
+                fontSize: 12.sp,
+                color: AppColors.black300,
+              ),
+              defaultTextStyle: TextStyle(
+                fontSize: 13.sp,
+                color: AppColors.black900,
+              ),
+              weekendTextStyle: TextStyle(
+                fontSize: 13.sp,
+                color: AppColors.graySoft25,
+              ),
               markerDecoration: BoxDecoration(
                 color: AppColors.graySoft25.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
               // Gün rəngləri tam calendarBuilders ilə (present=yaşıl) idarə olunur.
-              todayDecoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
+              todayDecoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+              ),
               todayTextStyle: const TextStyle(color: Colors.transparent),
-              selectedDecoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
+              selectedDecoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+              ),
               selectedTextStyle: const TextStyle(color: Colors.transparent),
             ),
             calendarBuilders: CalendarBuilders(
               markerBuilder: (context, date, events) {
                 final d = DateTime(date.year, date.month, date.day);
-                final isAbsent = absentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
-                final isPresent = presentDates.any((x) => x.year == d.year && x.month == d.month && x.day == d.day);
+                final isAbsent = absentDates.any(
+                  (x) =>
+                      x.year == d.year && x.month == d.month && x.day == d.day,
+                );
+                final isPresent = presentDates.any(
+                  (x) =>
+                      x.year == d.year && x.month == d.month && x.day == d.day,
+                );
                 if (isPresent) {
                   return Positioned(
                     bottom: 2,
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(color: AppColors.presentGreen, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                        color: AppColors.presentGreen,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                   );
                 }
@@ -138,7 +173,10 @@ class AttendanceCalendar extends StatelessWidget {
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(color: AppColors.red500, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                        color: AppColors.red500,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                   );
                 }
@@ -150,7 +188,8 @@ class AttendanceCalendar extends StatelessWidget {
                   _dayCell(date, isOutside: date.month != focusedMonth.month),
               selectedBuilder: (context, date, _) =>
                   _dayCell(date, isOutside: date.month != focusedMonth.month),
-              outsideBuilder: (context, date, _) => _dayCell(date, isOutside: true),
+              outsideBuilder: (context, date, _) =>
+                  _dayCell(date, isOutside: true),
             ),
           ),
         ],

@@ -33,7 +33,10 @@ class StudentGradesPage extends StatelessWidget {
             final grades = state.grades;
             if (grades.isEmpty) {
               return Center(
-                child: Text('No grades yet', style: TextStyle(fontSize: 16.sp, color: AppColors.black500)),
+                child: Text(
+                  'No grades yet',
+                  style: TextStyle(fontSize: 16.sp, color: AppColors.black500),
+                ),
               );
             }
             return ListView.builder(

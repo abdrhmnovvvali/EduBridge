@@ -33,7 +33,8 @@ class StudentProfilePage extends StatelessWidget {
             CircleAvatar(
               radius: 50.r,
               backgroundColor: AppColors.graySoft100,
-              backgroundImage: profile.photoUrl != null && profile.photoUrl!.isNotEmpty
+              backgroundImage:
+                  profile.photoUrl != null && profile.photoUrl!.isNotEmpty
                   ? CachedNetworkImageProvider(profile.photoUrl!.toParsedUrl())
                   : null,
               child: profile.photoUrl == null || profile.photoUrl!.isEmpty
@@ -51,9 +52,19 @@ class StudentProfilePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.email_outlined, size: 18.r, color: AppColors.black500),
+                    Icon(
+                      Icons.email_outlined,
+                      size: 18.r,
+                      color: AppColors.black500,
+                    ),
                     SizedBox(width: 8.w),
-                    Text(profile.email, style: TextStyle(fontSize: 14.sp, color: AppColors.black500)),
+                    Text(
+                      profile.email,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.black500,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -63,9 +74,19 @@ class StudentProfilePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.phone_outlined, size: 18.r, color: AppColors.black500),
+                    Icon(
+                      Icons.phone_outlined,
+                      size: 18.r,
+                      color: AppColors.black500,
+                    ),
                     SizedBox(width: 8.w),
-                    Text(profile.phone!, style: TextStyle(fontSize: 14.sp, color: AppColors.black500)),
+                    Text(
+                      profile.phone!,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.black500,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -85,7 +106,13 @@ class StudentProfilePage extends StatelessWidget {
               SizedBox(height: 24.h),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Enrollments', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+                child: Text(
+                  'Enrollments',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
               SizedBox(height: 12.h),
               ...profile.enrollments.map(
@@ -101,11 +128,26 @@ class StudentProfilePage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(e.className, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
-                        Text(e.courseName, style: TextStyle(fontSize: 14.sp, color: AppColors.black500)),
+                        Text(
+                          e.className,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          e.courseName,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.black500,
+                          ),
+                        ),
                         Text(
                           '${DateFormat('MMM y').format(e.startDate)} - ${DateFormat('MMM y').format(e.endDate)}',
-                          style: TextStyle(fontSize: 12.sp, color: AppColors.black300),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColors.black300,
+                          ),
                         ),
                       ],
                     ),

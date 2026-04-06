@@ -40,7 +40,8 @@ class TeacherFeedbackCard extends StatelessWidget {
               color: AppColors.black500,
             ),
           ),
-          if (item.taskDescription != null && item.taskDescription!.isNotEmpty) ...[
+          if (item.taskDescription != null &&
+              item.taskDescription!.isNotEmpty) ...[
             SizedBox(height: 6.h),
             Text(
               item.taskDescription!,
@@ -56,7 +57,10 @@ class TeacherFeedbackCard extends StatelessWidget {
           ),
           if (item.answer != null && item.answer!.isNotEmpty) ...[
             SizedBox(height: 10.h),
-            Text('Your answer', style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600)),
+            Text(
+              'Your answer',
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600),
+            ),
             SizedBox(height: 4.h),
             Text(item.answer!, style: TextStyle(fontSize: 13.sp)),
           ],
@@ -72,7 +76,10 @@ class TeacherFeedbackCard extends StatelessWidget {
                 ),
               ),
               if (item.teacher?.fullName != null) ...[
-                Text(' · ', style: TextStyle(fontSize: 12.sp, color: Colors.grey)),
+                Text(
+                  ' · ',
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                ),
                 Expanded(
                   child: Text(
                     item.teacher!.fullName,
@@ -83,7 +90,8 @@ class TeacherFeedbackCard extends StatelessWidget {
               ],
             ],
           ),
-          if (item.teacherFeedback != null && item.teacherFeedback!.isNotEmpty) ...[
+          if (item.teacherFeedback != null &&
+              item.teacherFeedback!.isNotEmpty) ...[
             SizedBox(height: 10.h),
             Container(
               width: double.infinity,
@@ -97,10 +105,16 @@ class TeacherFeedbackCard extends StatelessWidget {
                 children: [
                   Text(
                     'Teacher feedback',
-                    style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   SizedBox(height: 4.h),
-                  Text(item.teacherFeedback!, style: TextStyle(fontSize: 13.sp)),
+                  Text(
+                    item.teacherFeedback!,
+                    style: TextStyle(fontSize: 13.sp),
+                  ),
                 ],
               ),
             ),

@@ -50,7 +50,9 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
   }
 
   int _countInMonth(Set<DateTime> dates, DateTime month) {
-    return dates.where((d) => d.year == month.year && d.month == month.month).length;
+    return dates
+        .where((d) => d.year == month.year && d.month == month.month)
+        .length;
   }
 
   @override
@@ -138,14 +140,21 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                 }
                 if (state is StudentAttendanceSuccess) {
                   final sets = _calendarDaySets(state.items);
-                  final presentCount = _countInMonth(sets.presentDates, _focusedMonth);
-                  final absentMonthCount = _countInMonth(sets.absentDates, _focusedMonth);
+                  final presentCount = _countInMonth(
+                    sets.presentDates,
+                    _focusedMonth,
+                  );
+                  final absentMonthCount = _countInMonth(
+                    sets.absentDates,
+                    _focusedMonth,
+                  );
 
                   return Column(
                     children: [
                       AttendanceCalendar(
                         focusedMonth: _focusedMonth,
-                        onMonthChanged: (d) => setState(() => _focusedMonth = d),
+                        onMonthChanged: (d) =>
+                            setState(() => _focusedMonth = d),
                         absentDates: sets.absentDates,
                         presentDates: sets.presentDates,
                       ),
@@ -172,10 +181,10 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                           ],
                         ),
                       ),
-// Spacer(),
+                      // Spacer(),
                       // _buildBottomIllustration(),
                       70.verticalSpace,
-                      SvgPicture.asset("assets/svg/attendance.svg")
+                      SvgPicture.asset("assets/svg/attendance.svg"),
                     ],
                   );
                 }

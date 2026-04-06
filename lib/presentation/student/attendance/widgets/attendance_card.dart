@@ -37,18 +37,40 @@ class AttendanceCard extends StatelessWidget {
           Container(
             width: 8.w,
             height: 40.h,
-            decoration: BoxDecoration(color: _statusColor, borderRadius: BorderRadius.circular(4.r)),
+            decoration: BoxDecoration(
+              color: _statusColor,
+              borderRadius: BorderRadius.circular(4.r),
+            ),
           ),
           SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.status.toUpperCase(), style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: _statusColor)),
+                Text(
+                  item.status.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    color: _statusColor,
+                  ),
+                ),
                 if (item.sessionDate != null)
-                  Text(DateFormat('MMM d, y').format(item.sessionDate!), style: TextStyle(fontSize: 12.sp, color: AppColors.black500)),
+                  Text(
+                    DateFormat('MMM d, y').format(item.sessionDate!),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: AppColors.black500,
+                    ),
+                  ),
                 if (item.className != null)
-                  Text(item.className!, style: TextStyle(fontSize: 12.sp, color: AppColors.black300)),
+                  Text(
+                    item.className!,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: AppColors.black300,
+                    ),
+                  ),
               ],
             ),
           ),
