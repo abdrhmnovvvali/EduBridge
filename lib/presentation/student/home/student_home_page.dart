@@ -222,6 +222,7 @@ class StudentHomePage extends StatelessWidget {
                 final items = [
                   (label: 'Tasks', icon: Icons.assignment, route: AppRoutes.studentTasks),
                   (label: 'Materials', icon: Icons.folder_open, route: AppRoutes.studentMaterials),
+                  (label: 'Feedback', icon: Icons.rate_review, route: AppRoutes.studentTeacherFeedback),
                   (label: 'Attendance', icon: Icons.event_available, route: AppRoutes.studentAttendance),
                   (label: 'Grades', icon: Icons.grade, route: AppRoutes.studentGrades),
                   (label: 'Invoices', icon: Icons.receipt_long, route: AppRoutes.studentInvoices),
@@ -248,7 +249,7 @@ class StudentHomePage extends StatelessWidget {
                     ),
                   ),
                 );
-              }, childCount: 7),
+              }, childCount: 8),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 15.h,

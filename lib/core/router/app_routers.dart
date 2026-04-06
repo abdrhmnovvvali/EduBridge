@@ -30,6 +30,7 @@ class AppRoutes {
   static const String studentInvoices = '/studentInvoices';
   static const String studentNotifications = '/studentNotifications';
   static const String studentLeaderboard = '/studentLeaderboard';
+  static const String studentTeacherFeedback = '/studentTeacherFeedback';
   static const String studentProfile = '/studentProfile';
   static const String studentTaskSubmit = '/studentTaskSubmit';
 
@@ -142,6 +143,11 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.studentLeaderboard,
       name: 'studentLeaderboard',
       builder: (_, __) => Pager.studentLeaderboard,
+    ),
+    GoRoute(
+      path: AppRoutes.studentTeacherFeedback,
+      name: 'studentTeacherFeedback',
+      builder: (_, __) => Pager.studentTeacherFeedback,
     ),
     GoRoute(
       path: AppRoutes.studentProfile,

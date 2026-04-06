@@ -9,6 +9,7 @@ import 'package:eduroom/cubits/student_leaderboard/student_leaderboard_cubit.dar
 import 'package:eduroom/cubits/student_materials/student_materials_cubit.dart';
 import 'package:eduroom/cubits/student_notifications/student_notifications_cubit.dart';
 import 'package:eduroom/cubits/student_profile/student_profile_cubit.dart';
+import 'package:eduroom/cubits/student_teacher_feedback/student_teacher_feedback_cubit.dart';
 import 'package:eduroom/cubits/student_tasks/student_tasks_cubit.dart';
 import 'package:eduroom/cubits/teacher_class_students/teacher_class_students_cubit.dart';
 import 'package:eduroom/cubits/teacher_classes/teacher_classes_cubit.dart';
@@ -78,6 +79,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => TeacherProfileCubit(locator(), locator()));
   locator.registerFactory(() => StudentTasksCubit(locator(), locator()));
   locator.registerFactory(() => StudentMaterialsCubit(locator(), locator()));
+  locator.registerFactory(
+    () => StudentTeacherFeedbackCubit(locator(), locator(), locator()),
+  );
   locator.registerFactory(() => StudentAttendanceCubit(locator(), locator()));
   locator.registerFactory(() => StudentGradesCubit(locator(), locator()));
   locator.registerFactory(() => StudentInvoicesCubit(locator(), locator()));

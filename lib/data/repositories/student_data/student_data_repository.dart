@@ -7,6 +7,8 @@ import 'package:eduroom/data/models/remote/response/student/leaderboard_response
 import 'package:eduroom/data/models/remote/response/materials_page_response.dart';
 import 'package:eduroom/data/models/remote/response/student/notification_response.dart';
 import 'package:eduroom/data/models/remote/response/student/task_response.dart';
+import 'package:eduroom/data/models/remote/response/student/teacher_feedback_page_response.dart';
+import 'package:eduroom/data/models/remote/response/student/student_task_submissions_page_response.dart';
 
 class StudentDataRepository implements StudentDataContract {
   StudentDataRepository(this._dataSource);
@@ -19,6 +21,14 @@ class StudentDataRepository implements StudentDataContract {
   @override
   Future<void> submitTask(int taskId, {String? comment, String? filePath}) =>
       _dataSource.submitTask(taskId, comment: comment, filePath: filePath);
+
+  @override
+  Future<TeacherFeedbackPageResponse> getTeacherFeedback({int page = 1, int limit = 20, int? classId}) =>
+      _dataSource.getTeacherFeedback(page: page, limit: limit, classId: classId);
+
+  @override
+  Future<StudentTaskSubmissionsPageResponse> getStudentTaskSubmissions({int page = 1, int limit = 20, int? classId}) =>
+      _dataSource.getStudentTaskSubmissions(page: page, limit: limit, classId: classId);
 
   @override
   Future<MaterialsPageResponse> getMaterials({int page = 1, int limit = 20, int? classId}) =>

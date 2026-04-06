@@ -12,6 +12,7 @@ class Endpoints {
   static const studentTasks = '$_baseUrl/student/me/tasks';
   static String studentTaskSubmit(int id) => '$_baseUrl/student/me/tasks/$id/submit';
   static const studentTaskSubmissions = '$_baseUrl/student/me/tasks/submissions';
+  static const studentTeacherFeedback = '$_baseUrl/student/me/teacher-feedback';
   static const studentMaterials = '$_baseUrl/student/me/materials';
   static const studentAttendance = '$_baseUrl/student/me/attendance';
   static const studentGrades = '$_baseUrl/student/me/grades';

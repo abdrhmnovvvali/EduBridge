@@ -8,6 +8,7 @@ import 'package:eduroom/cubits/student_materials/student_materials_cubit.dart';
 import 'package:eduroom/cubits/student_notifications/student_notifications_cubit.dart';
 import 'package:eduroom/cubits/student_profile/student_profile_cubit.dart';
 import 'package:eduroom/cubits/student_task_submit/student_task_submit_cubit.dart';
+import 'package:eduroom/cubits/student_teacher_feedback/student_teacher_feedback_cubit.dart';
 import 'package:eduroom/cubits/student_tasks/student_tasks_cubit.dart';
 import 'package:eduroom/cubits/splash/splash_cubit.dart';
 import 'package:eduroom/cubits/teacher_attendance/teacher_attendance_cubit.dart';
@@ -38,6 +39,7 @@ import 'package:eduroom/presentation/student/leaderboard/student_leaderboard_pag
 import 'package:eduroom/presentation/student/materials/student_materials_page.dart';
 import 'package:eduroom/presentation/student/notifications/student_notifications_page.dart';
 import 'package:eduroom/presentation/student/task_submit/student_task_submit_page.dart';
+import 'package:eduroom/presentation/student/teacher_feedback/student_teacher_feedback_page.dart';
 import 'package:eduroom/presentation/student/tasks/student_tasks_page.dart';
 import 'package:eduroom/presentation/teacher/class_detail/teacher_class_detail_page.dart';
 import 'package:eduroom/presentation/teacher/classes/teacher_classes_page.dart';
@@ -180,6 +182,11 @@ class Pager {
   static Widget get studentMaterials => BlocProvider<StudentMaterialsCubit>(
         create: (_) => locator()..load(),
         child: const StudentMaterialsPage(),
+      );
+
+  static Widget get studentTeacherFeedback => BlocProvider<StudentTeacherFeedbackCubit>(
+        create: (_) => locator<StudentTeacherFeedbackCubit>()..load(),
+        child: const StudentTeacherFeedbackPage(),
       );
 
   static Widget get studentAttendance => BlocProvider<StudentAttendanceCubit>(
