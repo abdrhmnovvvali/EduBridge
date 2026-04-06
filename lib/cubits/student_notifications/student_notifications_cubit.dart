@@ -17,6 +17,14 @@ class StudentNotificationsCubit extends Cubit<StudentNotificationsState> {
   final InternetCheckerService _internetCheckerService;
   final StudentDataContract _contract;
 
+  static String? _dioMessage(dynamic data) {
+    if (data is! Map) return null;
+    final msg = data['message'] ?? data['error'];
+    if (msg is String) return msg;
+    if (msg is List) return msg.map((e) => e.toString()).join(', ');
+    return null;
+  }
+
   Future<void> load() async {
     try {
       emit(StudentNotificationsLoading());
@@ -29,7 +37,7 @@ class StudentNotificationsCubit extends Cubit<StudentNotificationsState> {
       emit(StudentNotificationsSuccess(list));
     } on DioException catch (e, s) {
       await Sentry.captureException(e, stackTrace: s);
-      emit(StudentNotificationsError(failure: GlobalFailure(e.response?.data['message'] ?? 'Error')));
+      emit(StudentNotificationsError(failure: GlobalFailure(_dioMessage(e.response?.data) ?? 'Error')));
     } catch (e, s) {
       log.error('$e $s');
       await Sentry.captureException(e, stackTrace: s);

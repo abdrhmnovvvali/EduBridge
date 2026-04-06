@@ -7,7 +7,7 @@ import '../../../../core/constants/endpoints.dart';
 class StudentProfileDataSource {
   Future<StudentProfileResponse> getStudentProfile() async {
     final dio = dioClient;
-    const endpoint = Endpoints.studentProfile;
+    final endpoint = Endpoints.studentProfile;
     final result = await dio.get(endpoint);
     return StudentProfileResponse.fromJson(result.data);
   }

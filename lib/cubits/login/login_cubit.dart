@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:eduroom/core/controllers/session_controller.dart';
@@ -7,7 +9,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import '../../core/di/locator.dart';
 import '../../core/enums/user_role.dart';
+import '../../core/services/student_push_token_service.dart';
 import '../../core/helpers/logger.dart';
 import '../../core/network/global_failure.dart';
 import '../../core/services/internet_checker_service.dart';
@@ -65,6 +69,9 @@ class LoginCubit extends Cubit<LoginState> {
       );
 
       await SessionController.saveSessionResponse(result);
+      if (result.user.role.toUpperCase() == 'STUDENT') {
+        unawaited(locator<StudentPushTokenService>().registerAfterLogin());
+      }
       final role = result.user.role == "TEACHER"
           ? UserRole.teacher
           : UserRole.student;
@@ -109,6 +116,9 @@ class LoginCubit extends Cubit<LoginState> {
       );
 
       await SessionController.saveSessionResponse(result);
+      if (result.user.role.toUpperCase() == 'STUDENT') {
+        unawaited(locator<StudentPushTokenService>().registerAfterLogin());
+      }
       final role = result.user.role == "STUDENT"
           ? UserRole.student
           : UserRole.teacher;

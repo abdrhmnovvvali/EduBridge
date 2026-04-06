@@ -10,10 +10,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../../data/contracts/student_data/student_data_contract.dart';
 import '../../data/models/remote/response/session_response/session_response.dart';
 import '../base/hive/base_hive.dart';
 import '../di/locator.dart';
-import '../helpers/app_global_keys.dart';
 import '../network/dio/dio_client.dart';
 
 class SessionController {
@@ -37,6 +37,16 @@ class SessionController {
       _sessionHiveDataSource.saveData(response);
 
   static Future<void> logout({bool pleaseLoginAlert = false}) async {
+    try {
+      final r = _sessionResponse;
+      if (r != null &&
+          r.user.role.toUpperCase() == 'STUDENT' &&
+          token != null) {
+        await locator<StudentDataContract>().unregisterStudentPushToken();
+      }
+    } catch (_) {
+      // JWT hələ lazımdır; uğursuz olsa belə çıxışı davam etdir
+    }
     DioClient.instance.reset();
     await _sessionHiveDataSource.clearData();
     PaintingBinding.instance.imageCache.clear();

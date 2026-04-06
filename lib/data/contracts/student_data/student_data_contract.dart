@@ -19,5 +19,7 @@ abstract class StudentDataContract {
   Future<InvoicesListResponse> getInvoices();
   Future<List<NotificationResponse>> getNotifications();
   Future<void> markNotificationRead(int id);
+  Future<void> registerStudentPushToken(String token);
+  Future<void> unregisterStudentPushToken();
   Future<LeaderboardResponse> getLeaderboard({int? classId, String? monthKey});
 }

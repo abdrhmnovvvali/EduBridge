@@ -17,14 +17,25 @@ class NotificationResponse extends BaseModel {
     required this.createdAt,
   });
 
-  factory NotificationResponse.fromJson(Map<String, dynamic> json) => NotificationResponse(
-        id: json["id"],
-        type: json["type"] ?? "info",
-        title: json["title"] ?? "",
-        body: json["body"],
-        isRead: json["status"] == "READ" || json["read_at"] != null || json["readAt"] != null,
-        createdAt: DateTime.parse(json["created_at"] ?? json["createdAt"] ?? DateTime.now().toIso8601String()),
-      );
+  factory NotificationResponse.fromJson(Map<String, dynamic> json) {
+    final readRaw = json['isRead'] ?? json['is_read'];
+    final isRead = readRaw == true ||
+        json["status"] == "READ" ||
+        json["read_at"] != null ||
+        json["readAt"] != null;
+
+    final created = json["created_at"] ?? json["createdAt"] ?? json["created"];
+    return NotificationResponse(
+      id: json["id"] is int ? json["id"] as int : int.tryParse('${json["id"]}') ?? 0,
+      type: '${json["type"] ?? "info"}',
+      title: '${json["title"] ?? ""}',
+      body: json["body"]?.toString(),
+      isRead: isRead,
+      createdAt: created != null
+          ? DateTime.tryParse(created.toString()) ?? DateTime.now()
+          : DateTime.now(),
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() => {

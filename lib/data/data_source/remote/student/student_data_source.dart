@@ -163,12 +163,32 @@ class StudentDataSource {
 
   Future<List<NotificationResponse>> getNotifications() async {
     final result = await _dio.get(Endpoints.studentNotifications);
-    final list = result.data is List ? result.data as List : [];
+    final data = result.data;
+    final List<dynamic> list;
+    if (data is List) {
+      list = data;
+    } else if (data is Map<String, dynamic>) {
+      final raw = data['notifications'] ?? data['data'] ?? data['items'];
+      list = raw is List ? raw : [];
+    } else {
+      list = [];
+    }
     return list.map((e) => NotificationResponse.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   Future<void> markNotificationRead(int id) async {
     await _dio.patch(Endpoints.studentNotificationRead(id));
+  }
+
+  Future<void> registerStudentPushToken(String token) async {
+    await _dio.post(
+      Endpoints.studentPushToken,
+      data: <String, dynamic>{'token': token},
+    );
+  }
+
+  Future<void> unregisterStudentPushToken() async {
+    await _dio.delete(Endpoints.studentPushToken);
   }
 
   Future<LeaderboardResponse> getLeaderboard({int? classId, String? monthKey}) async {

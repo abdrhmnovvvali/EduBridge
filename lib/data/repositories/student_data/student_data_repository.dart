@@ -51,6 +51,13 @@ class StudentDataRepository implements StudentDataContract {
   Future<void> markNotificationRead(int id) => _dataSource.markNotificationRead(id);
 
   @override
+  Future<void> registerStudentPushToken(String token) =>
+      _dataSource.registerStudentPushToken(token);
+
+  @override
+  Future<void> unregisterStudentPushToken() => _dataSource.unregisterStudentPushToken();
+
+  @override
   Future<LeaderboardResponse> getLeaderboard({int? classId, String? monthKey}) =>
       _dataSource.getLeaderboard(classId: classId, monthKey: monthKey);
 }

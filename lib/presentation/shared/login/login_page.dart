@@ -1,5 +1,4 @@
 import 'package:eduroom/core/constants/app_assets.dart';
-import 'package:eduroom/core/constants/app_colors.dart';
 import 'package:eduroom/core/helpers/snackbars/snackbars.dart';
 import 'package:eduroom/core/router/app_routers.dart';
 import 'package:eduroom/cubits/login/login_cubit.dart';
@@ -11,9 +10,17 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/enums/user_role.dart';
 import 'widgets/illustration.dart';
+import 'widgets/login_sign_in_button.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,6 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF456BC0),
       body: Stack(
-
         children: [
           Container(
             height: 480,
@@ -44,7 +50,7 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               56.verticalSpace,
-          
+
               SizedBox(
                 height: size.height * 0.22,
                 width: double.infinity,
@@ -52,9 +58,9 @@ class LoginPage extends StatelessWidget {
                   child: Illustration(assetPath: AppAssets.login),
                 ),
               ),
-          
+
               20.verticalSpace,
-          
+
               Padding(
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Column(
@@ -81,9 +87,9 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-          
+
               20.verticalSpace,
-          
+
               Expanded(
                 child: Container(
                   height: 483.h,
@@ -102,7 +108,7 @@ class LoginPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 4),
-          
+
                           const Text(
                             "Email",
                             style: TextStyle(
@@ -112,10 +118,10 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           6.verticalSpace,
-          
+
                           CustomInput(controller: cubit.emailController),
                           22.verticalSpace,
-          
+
                           const Text(
                             "Password",
                             style: TextStyle(
@@ -125,75 +131,55 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           6.verticalSpace,
-          
-                          CustomInput(controller: cubit.passwordController),
-                          40.verticalSpace,
-          
-                          SizedBox(
-                            width: double.infinity,
-                            height: 54,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                gradient: AppColors.primary,
-                                borderRadius: BorderRadius.circular(14),
+
+                          CustomInput(
+                            controller: cubit.passwordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: _obscurePassword,
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() => _obscurePassword = !_obscurePassword);
+                              },
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: const Color(0xFF8A96A8),
+                                size: 22,
                               ),
-                              child: BlocConsumer<LoginCubit, LoginState>(
-                                listener: (context, state) {
-                                  if (state is LoginSuccess) {
-                                    if (state.role == UserRole.teacher) {
-                                      context.go(AppRoutes.teacherHome);
-                                    } else if (state.role == UserRole.student) {
-                                      context.go(AppRoutes.studentHome);
-                                    }
-                                  } else if (state is LoginFailure &&
-                                      !state.suppressSnackbar) {
-                                    Snackbars.showError(
-                                      state.failure!.message!,
-                                    );
-                                  } else if (state is LoginNetworkError &&
-                                      !state.suppressSnackbar) {
-                                    Snackbars.showError(
-                                      state.failure!.message!,
-                                    );
-                                  }
-                                },
-                                builder: (_, state) {
-                                  return ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      await cubit.handleLogin();
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "SIGN IN",
-                                          style: TextStyle(
-                                            letterSpacing: 1.2,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        14.horizontalSpace,
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.white,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                              tooltip: _obscurePassword ? 'Show password' : 'Hide password',
                             ),
                           ),
-          
+                          40.verticalSpace,
+
+                          BlocConsumer<LoginCubit, LoginState>(
+                            listener: (context, state) {
+                              if (state is LoginSuccess) {
+                                if (state.role == UserRole.teacher) {
+                                  context.go(AppRoutes.teacherHome);
+                                } else if (state.role == UserRole.student) {
+                                  context.go(AppRoutes.studentHome);
+                                }
+                              } else if (state is LoginFailure &&
+                                  !state.suppressSnackbar) {
+                                Snackbars.showError(
+                                  state.failure!.message!,
+                                );
+                              } else if (state is LoginNetworkError &&
+                                  !state.suppressSnackbar) {
+                                Snackbars.showError(
+                                  state.failure!.message!,
+                                );
+                              }
+                            },
+                            builder: (_, state) {
+                              return LoginSignInButton(
+                                isLoading: state is LoginLoading,
+                                onPressed: () => cubit.handleLogin(),
+                              );
+                            },
+                          ),
+
                           30.verticalSpace,
                         ],
                       ),

@@ -6,14 +6,14 @@ import 'package:eduroom/data/models/remote/response/session_response/session_res
 class LoginDataSource {
     Future<SessionResponse> teacherLogin(LoginParams params) async {
     final dio = authClient;
-    const endpoint = Endpoints.teacherLogin;
+    final endpoint = Endpoints.teacherLogin;
     final body = params.toJson();
     final result = await dio.post(endpoint, data: body);
     return SessionResponse.fromJson(result.data);
   }
      Future<SessionResponse> studentLogin(LoginParams params) async {
     final dio = authClient;
-    const endpoint = Endpoints.studentLogin;
+    final endpoint = Endpoints.studentLogin;
     final body = params.toJson();
     final result = await dio.post(endpoint, data: body);
     return SessionResponse.fromJson(result.data);

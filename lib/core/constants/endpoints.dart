@@ -19,6 +19,7 @@ class Endpoints {
   static const studentInvoices = '$_baseUrl/student/me/invoices';
   static const studentNotifications = '$_baseUrl/student/me/notifications';
   static String studentNotificationRead(int id) => '$_baseUrl/student/me/notifications/$id/read';
+  static const studentPushToken = '$_baseUrl/student/me/push-token';
   static const studentLeaderboard = '$_baseUrl/student/me/leaderboard';
 
   // Teacher

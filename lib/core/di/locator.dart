@@ -45,6 +45,7 @@ import '../base/hive/base_hive.dart';
 import '../base/locator/base_locator.dart';
 import '../constants/hive_keys.dart';
 import '../services/internet_checker_service.dart';
+import '../services/student_push_token_service.dart';
 
 final locator = BaseLocator.instance;
 
@@ -106,6 +107,9 @@ Future<void> setupLocator() async {
   );
   locator.registerLazySingleton<StudentDataContract>(
     () => StudentDataRepository(locator()),
+  );
+  locator.registerLazySingleton(
+    () => StudentPushTokenService(locator<StudentDataContract>()),
   );
   locator.registerLazySingleton<TeacherProfileContract>(
     () => TeacherProfileRepository(locator()),

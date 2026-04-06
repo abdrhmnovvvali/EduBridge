@@ -7,7 +7,7 @@ import '../../../../core/constants/endpoints.dart';
 class TeacherProfileDataSoruce {
   Future<TeacherProfileResponse> getTeacherProfile() async {
     final dio = dioClient;
-    const endpoint = Endpoints.teacherProfile;
+    final endpoint = Endpoints.teacherProfile;
     final result = await dio.get(endpoint);
     if (result.statusCode != null && result.statusCode! >= 400) {
       throw DioException(

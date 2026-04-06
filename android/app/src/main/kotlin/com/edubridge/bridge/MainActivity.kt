@@ -1,4 +1,4 @@
-package com.example.eduroom
+package com.edubridge.bridge
 
 import io.flutter.embedding.android.FlutterActivity
 

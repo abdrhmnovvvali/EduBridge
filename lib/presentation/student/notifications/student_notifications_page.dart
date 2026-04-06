@@ -31,15 +31,45 @@ class StudentNotificationsPage extends StatelessWidget {
           }
           if (state is StudentNotificationsSuccess) {
             final notifications = state.notifications;
+            final cubit = context.read<StudentNotificationsCubit>();
             if (notifications.isEmpty) {
-              return Center(
-                child: Text('No notifications', style: TextStyle(fontSize: 16.sp, color: AppColors.black500)),
+              return RefreshIndicator(
+                color: Colors.white,
+                backgroundColor: AppColors.primaryGradientTop,
+                onRefresh: () => cubit.load(),
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(height: 120.h),
+                    Center(
+                      child: Text(
+                        'No notifications',
+                        style: TextStyle(fontSize: 16.sp, color: AppColors.black500),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
-            return ListView.builder(
-              padding: EdgeInsets.all(20.w),
-              itemCount: notifications.length,
-              itemBuilder: (_, i) => NotificationCard(notification: notifications[i]),
+            return RefreshIndicator(
+              color: Colors.white,
+              backgroundColor: AppColors.primaryGradientTop,
+              onRefresh: () => cubit.load(),
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.all(20.w),
+                itemCount: notifications.length,
+                itemBuilder: (_, i) {
+                  final n = notifications[i];
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: NotificationCard(
+                      notification: n,
+                      onTap: () => cubit.markAsRead(n.id),
+                    ),
+                  );
+                },
+              ),
             );
           }
           return const SizedBox.shrink();
